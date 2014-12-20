@@ -25,7 +25,7 @@ class StaticServlet extends PicoServlet {
 
   Future<HttpResponse> serve(HttpRequest request) {
     var method = request.method;
-    var file = request.uri.path;
+    var file = request.uri.path.substring(1);
     print('$method $file');
     return entry.getFile(file).then((fe) {
       print("got to start read");
@@ -34,6 +34,7 @@ class StaticServlet extends PicoServlet {
       print("read: $text");
       return new HttpResponse.ok()..setContent(text);
     }).catchError((e) {
+      print(e);
       return new HttpResponse.notFound();
     });
   }

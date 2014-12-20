@@ -1,9 +1,13 @@
 import 'dart:html';
+import 'dart:async';
 
-import 'fs.dart';
+import 'package:chrome_net/server.dart' show PicoServer;
+
+import 'static_servlet.dart';
 import 'server.dart';
 
-var fs;
+var port = 5000;
+var staticServlet;
 var server;
 
 // UI elements
@@ -11,8 +15,15 @@ var btnFab;
 var lstLogger;
 
 void main() {
-  fs = new Fs();
-  server = new Server();
+  StaticServlet.choose().then((servlet) {
+    staticServlet = servlet;
+    return PicoServer.createServer(port);
+  }).then((server) {
+    server.addServlet(staticServlet);
+    return server.getInfo();
+  }).then((info) {
+    print("Server running on ${info.localAddress}:${info.localPort.toString()}");
+  });
 
   btnFab = querySelector('#btnFab');
   lstLogger = querySelector('#lstLogger');

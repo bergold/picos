@@ -19,5 +19,9 @@
 
   "permissions": [
     { "fileSystem": ["directory", "retainEntries"] }
-  ]
+  ],
+
+  "sockets": {
+    "tcpServer": { "listen": ":*" }
+  }
 }

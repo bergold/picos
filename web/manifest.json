@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "serve",
   "short_name": "serve",
-  "description": "Description for serve",
+  "description": "Serve a local folder on localhost.",
 
   "version": "0.0.1.0",
 
@@ -15,5 +15,9 @@
     "background": {
       "scripts": ["background.js"]
     }
-  }
+  },
+
+  "permissions": [
+    { "fileSystem": ["directory", "retainEntries"] }
+  ]
 }

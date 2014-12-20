@@ -1,6 +1,9 @@
 name: serve
-description: A sample Dart Chrome packaged application
+description: Serve a local folder on localhost.
 dependencies:
   chrome: any
+  chrome_net: any
 transformers:
+- $dart2js:
+    csp: true
 - chrome

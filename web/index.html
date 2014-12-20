@@ -4,17 +4,27 @@
 <head>
   <meta charset="utf-8">
   <title>serve</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
-  <h1>serve</h1>
 
-  <p>Hello world from Dart!</p>
-
-  <div id='container_id'>
-    <p id='text_id'>Click me <span id='count'></span>!</p>
+  <div id="container">
+    <header>
+      <div class="dropdown">
+        Select folder...
+        <div class="dropdown-menu"></div>
+      </div>
+      <button id="btnFab" class="fab"></button>
+    </header>
+    <section id="lstLogger"></section>
   </div>
+
+  <!--<div class="dialog-backdrop">
+    <div id="dlgConfig" class="dialog">
+
+    </div>
+  </div>-->
 
   <script src="packages/chrome/bootstrap.js" defer></script>
   <script src="main.dart" type="application/dart"></script>

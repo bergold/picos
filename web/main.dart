@@ -45,6 +45,7 @@ void triggerChoose() {
   StaticServlet.choose().then((servlet) {
     staticServlet = servlet;
     staticServlet.setLogger(new PrintServletLogger());
+    dropdownTrigger.text = staticServlet.name;
     return PicoServer.createServer(port);
   }).then((server) {
     server.addServlet(staticServlet);

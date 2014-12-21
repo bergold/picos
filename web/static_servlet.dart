@@ -22,6 +22,10 @@ class StaticServlet extends PicoServlet {
 
   StaticServlet.fromEntry(this.entry);
 
+  String get retainId => chrome.fileSystem.retainEntry(entry);
+  String get name => entry.name;
+  Future<String> get path => chrome.fileSystem.getDisplayPath(entry);
+
   void setLogger(ServletLogger logger) {
     _logger = logger == null ? new _NullLogger() : logger;
   }

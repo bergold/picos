@@ -71,7 +71,7 @@ section {
   padding: 0 24px;
 }
 .dropdown .dropdown-menu .menu-entry:hover:not([disabled]) {
-  background: rgba(0,0,0,0.12);
+  background: rgba(0,0,0,0.06);
 }
 .dropdown .dropdown-menu .menu-entry[disabled] {
   color: rgba(0,0,0,0.26);
@@ -81,7 +81,7 @@ section {
 }
 .dropdown .dropdown-menu .menu-divider {
   height: 1px;
-  background: rgba(0,0,0,0.06);
+  background: rgba(0,0,0,0.12);
   margin-top: 7px;
   margin-bottom: 8px;
 }

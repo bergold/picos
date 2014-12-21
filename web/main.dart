@@ -8,10 +8,40 @@ var port = 5000;
 var staticServlet;
 
 // UI elements
-//var btnFab;
-var lstLogger;
+var body;
+var dropdownTrigger;
+var dropdownMenu;
+var dropdownEntryLoading;
+var dropdownEntryEmpty;
+var dropdownEntryChoose;
+var loggerContainer;
 
 void main() {
+  body = html.document.body;
+  dropdownTrigger = html.querySelector('#dropdownTrigger');
+  dropdownMenu = html.querySelector('#dropdownMenu');
+  dropdownEntryLoading = html.querySelector('#dropdownEntryLoading');
+  dropdownEntryEmpty = html.querySelector('#dropdownEntryEmpty');
+  dropdownEntryChoose = html.querySelector('#dropdownEntryChoose');
+  loggerContainer = html.querySelector('#loggerContainer');
+
+  body.onClick.listen((e) {
+    dropdownMenu.attributes['hidden'] = '';
+  });
+  dropdownMenu.onClick.listen((e) => e.stopPropagation());
+
+  dropdownTrigger.onClick.listen((e) {
+    e.stopPropagation();
+    dropdownMenu.attributes.remove('hidden');
+  });
+
+  dropdownEntryChoose.onClick.listen((e) {
+    dropdownMenu.attributes['hidden'] = '';
+    triggerChoose();
+  });
+}
+
+void triggerChoose() {
   StaticServlet.choose().then((servlet) {
     staticServlet = servlet;
     staticServlet.setLogger(new PrintServletLogger());
@@ -22,9 +52,6 @@ void main() {
   }).then((info) {
     print("Server running on ${info.localAddress}:${info.localPort.toString()}");
   });
-
-  //btnFab = html.querySelector('#btnFab');
-  lstLogger = html.querySelector('#lstLogger');
 }
 
 class PrintServletLogger extends ServletLogger {

@@ -11,16 +11,16 @@
     <div id="container">
       <header>
         <div class="dropdown">
-          <div class="dropdown-value">Select folder</div>
-          <div class="dropdown-menu" hidden>
-            <div class="menu-entry" disabled>Loading recent folders...</div>
-            <div class="menu-entry" disabled hidden>No recent folders</div>
+          <div id="dropdownTrigger" class="dropdown-value">Select folder</div>
+          <div id="dropdownMenu" class="dropdown-menu" hidden>
+            <div id="dropdownEntryLoading" class="menu-entry" disabled>Loading recent folders...</div>
+            <div id="dropdownEntryEmpty" class="menu-entry" disabled hidden>No recent folders</div>
             <div class="menu-divider"></div>
-            <div class="menu-entry">Select folder...</div>
+            <div id="dropdownEntryChoose" class="menu-entry">Select folder...</div>
           </div>
         </div>
       </header>
-      <section id="lstLogger"></section>
+      <section id="loggerContainer"></section>
     </div>
 
     <!--<div class="dialog-backdrop">

@@ -1,6 +1,6 @@
 library serve.static_servlet;
 
-//import 'dart:html' as html;
+import 'dart:html' as html;
 import 'dart:async';
 
 import 'package:chrome/chrome_app.dart' as chrome;
@@ -47,7 +47,7 @@ class StaticServlet extends PicoServlet {
       //html.window.performance.measure('serve_$id', 'serve_start_$id', 'serve_end_$id');
       //logger.log(id, error: e, measure: 'serve_$id');
       return new HttpResponse.notFound();
-    }, test: (e) => e is chrome.FileError && e.code == chrome.FileError.NOT_FOUND_ERR).catchError((e) {
+    }, test: (e) => e is html.DomError && e.name == 'NotFoundError').catchError((e) {
       print('[$id] error: $e');
       return new HttpResponse(statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
     });

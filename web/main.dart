@@ -32,3 +32,23 @@ class PrintServletLogger extends ServletLogger {
   void logComplete(int id, HttpResponse response) => print('[$id] < $response');
   void logError(int id, error) => print('[$id] ! $error');
 }
+
+class ElementServletLogger extends ServletLogger {
+
+  final html.HtmlElement _container;
+
+  ElementServletLogger(this._container);
+
+  void logStart(int id, HttpRequest request) => print('[$id] > $request');
+  void logComplete(int id, HttpResponse response) => print('[$id] < $response');
+  void logError(int id, error) => print('[$id] ! $error');
+
+  void _parse(data) {
+
+  }
+
+  void _append(html.HtmlElement element) {
+    _container.append(element);
+    _container.scrollTop = _container.scrollHeight - _container.clientHeight;
+  }
+}

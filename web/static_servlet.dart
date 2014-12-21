@@ -1,10 +1,10 @@
 library serve.static_servlet;
 
-import 'dart:html' as html;
+//import 'dart:html' as html;
 import 'dart:async';
 
 import 'package:chrome/chrome_app.dart' as chrome;
-import 'package:chrome_net/server.dart' show PicoServlet, HttpRequest, HttpResponse;
+import 'package:chrome_net/server.dart' show PicoServlet, HttpRequest, HttpResponse, HttpStatus;
 
 class StaticServlet extends PicoServlet {
 
@@ -28,22 +28,28 @@ class StaticServlet extends PicoServlet {
     var id = requestId++;
     var file = request.uri.path.substring(1);
 
-    html.window.performance.mark('serve_start_$id');
-    logger.log(id, request: request);
+    print('[$id] start request');
+    //html.window.performance.mark('serve_start_$id');
+    //logger.log(id, request: request);
 
     return entry.getFile(file).then((fe) {
       return (fe as chrome.ChromeFileEntry).readText();
     }).then((text) {
       var response = new HttpResponse.ok()..setContent(text);
-      html.window.performance.mark('serve_end_$id');
-      html.window.performance.measure('serve_$id', 'serve_start_$id', 'serve_end_$id');
-      logger.log(id, response: response, measure: 'serve_$id');
+      print('[$id] success request');
+      //html.window.performance.mark('serve_end_$id');
+      //html.window.performance.measure('serve_$id', 'serve_start_$id', 'serve_end_$id');
+      //logger.log(id, response: response, measure: 'serve_$id');
       return response;
     }).catchError((e) {
-      html.window.performance.mark('serve_end_$id');
-      html.window.performance.measure('serve_$id', 'serve_start_$id', 'serve_end_$id');
-      logger.log(id, error: e, measure: 'serve_$id');
+      print('[$id] error request: not found');
+      //html.window.performance.mark('serve_end_$id');
+      //html.window.performance.measure('serve_$id', 'serve_start_$id', 'serve_end_$id');
+      //logger.log(id, error: e, measure: 'serve_$id');
       return new HttpResponse.notFound();
+    }, test: (e) => e is chrome.FileError && e.code == chrome.FileError.NOT_FOUND_ERR).catchError((e) {
+      print('[$id] error: $e');
+      return new HttpResponse(statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
     });
   }
 

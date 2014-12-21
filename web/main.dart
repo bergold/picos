@@ -3,7 +3,6 @@ import 'dart:html' as html;
 import 'package:chrome_net/server.dart' show PicoServer, HttpRequest, HttpResponse;
 
 import 'static_servlet.dart';
-import 'server.dart';
 
 var port = 5000;
 var staticServlet;

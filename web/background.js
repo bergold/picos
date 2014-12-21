@@ -4,7 +4,7 @@ chrome.app.runtime.onLaunched.addListener(function(launchData) {
     'index.html',
     {
       id: 'mainWindow',
-      bounds: {
+      outerbounds: {
         width: 800,
         height: 500
       },

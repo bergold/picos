@@ -5,7 +5,9 @@ import 'package:chrome_net/server.dart' show PicoServer, ServerLogger, HttpReque
 import 'static_servlet.dart';
 
 var port = 5000;
-var staticServlet;
+var server;
+var logger;
+var servlet;
 
 // UI elements
 var body;
@@ -39,19 +41,25 @@ void main() {
     dropdownMenu.attributes['hidden'] = '';
     triggerChoose();
   });
+
+  logger = new ElementServletLogger(loggerContainer);
 }
 
 void triggerChoose() {
-  StaticServlet.choose().then((servlet) {
-    staticServlet = servlet;
-    staticServlet.setLogger(new ElementServletLogger(loggerContainer));
-    dropdownTrigger.text = staticServlet.name;
+  if (server != null) {
+    server.dispose();
+  }
+  StaticServlet.choose().then((s) {
+    servlet = s;
+    servlet.setLogger(logger);
+    dropdownTrigger.text = servlet.name;
     return PicoServer.createServer(port);
-  }).then((server) {
-    server.addServlet(staticServlet);
+  }).then((s) {
+    server = s;
+    server.addServlet(servlet);
     return server.getInfo();
   }).then((info) {
-    print("Server running on ${info.localAddress}:${info.localPort.toString()}");
+    logger.logStatus("Server running on ${info.localAddress}:${info.localPort.toString()}");
   });
 }
 
@@ -70,6 +78,7 @@ class ElementServletLogger extends ServletLogger {
   void logStart(int id, HttpRequest request) => _parse({ 'id': id, 'icon': '>', 'msg': request });
   void logComplete(int id, HttpResponse response) => _parse({ 'id': id, 'icon': '<', 'msg': response });
   void logError(int id, error) => _parse({ 'id': id, 'icon': '!', 'msg': error });
+  void logStatus(String msg) => _parse({ 'id': 'info', 'icon': '#', 'msg': msg });
 
   void _parse(Map data) {
     var text = '[${data['id']}] ${data['icon']} ${data['msg']}';

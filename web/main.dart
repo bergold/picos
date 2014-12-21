@@ -44,7 +44,7 @@ void main() {
 void triggerChoose() {
   StaticServlet.choose().then((servlet) {
     staticServlet = servlet;
-    staticServlet.setLogger(new PrintServletLogger());
+    staticServlet.setLogger(new ElementServletLogger(loggerContainer));
     dropdownTrigger.text = staticServlet.name;
     return PicoServer.createServer(port);
   }).then((server) {
@@ -67,12 +67,15 @@ class ElementServletLogger extends ServletLogger {
 
   ElementServletLogger(this._container);
 
-  void logStart(int id, HttpRequest request) => print('[$id] > $request');
-  void logComplete(int id, HttpResponse response) => print('[$id] < $response');
-  void logError(int id, error) => print('[$id] ! $error');
+  void logStart(int id, HttpRequest request) => _parse({ 'id': id, 'icon': '>', 'msg': request });
+  void logComplete(int id, HttpResponse response) => _parse({ 'id': id, 'icon': '<', 'msg': response });
+  void logError(int id, error) => _parse({ 'id': id, 'icon': '!', 'msg': error });
 
-  void _parse(data) {
-
+  void _parse(Map data) {
+    var text = '[${data['id']}] ${data['icon']} ${data['msg']}';
+    var div = new html.DivElement();
+    div.text = text;
+    _append(div);
   }
 
   void _append(html.HtmlElement element) {

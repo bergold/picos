@@ -9,7 +9,7 @@ import 'package:chrome_net/server.dart' show PicoServlet, HttpRequest, HttpRespo
 class StaticServlet extends PicoServlet {
 
   final chrome.DirectoryEntry entry;
-  ServletLogger logger = new _NullLogger();
+  ServletLogger _logger = new _NullLogger();
   int requestId = 0;
 
   static Future<StaticServlet> choose() {
@@ -22,33 +22,30 @@ class StaticServlet extends PicoServlet {
 
   StaticServlet.fromEntry(this.entry);
 
+  void setLogger(ServletLogger logger) {
+    _logger = logger == null ? new _NullLogger() : logger;
+  }
+
   bool canServe(HttpRequest request) => true;
 
   Future<HttpResponse> serve(HttpRequest request) {
     var id = requestId++;
     var file = request.uri.path.substring(1);
 
-    print('[$id] start request');
-    //html.window.performance.mark('serve_start_$id');
-    //logger.log(id, request: request);
+    _logger.logStart(id, request);
 
     return entry.getFile(file).then((fe) {
       return (fe as chrome.ChromeFileEntry).readText();
     }).then((text) {
       var response = new HttpResponse.ok()..setContent(text);
-      print('[$id] success request');
-      //html.window.performance.mark('serve_end_$id');
-      //html.window.performance.measure('serve_$id', 'serve_start_$id', 'serve_end_$id');
-      //logger.log(id, response: response, measure: 'serve_$id');
+      _logger.logComplete(id, response);
       return response;
     }).catchError((e) {
-      print('[$id] error request: not found');
-      //html.window.performance.mark('serve_end_$id');
-      //html.window.performance.measure('serve_$id', 'serve_start_$id', 'serve_end_$id');
-      //logger.log(id, error: e, measure: 'serve_$id');
-      return new HttpResponse.notFound();
+      var response = new HttpResponse.notFound();
+      _logger.logComplete(id, response);
+      return response;
     }, test: (e) => e is html.DomError && e.name == 'NotFoundError').catchError((e) {
-      print('[$id] error: $e');
+      _logger.logError(id, e);
       return new HttpResponse(statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
     });
   }
@@ -56,9 +53,13 @@ class StaticServlet extends PicoServlet {
 }
 
 abstract class ServletLogger {
-  void log(int id, { HttpRequest request, HttpResponse response, error, String measure });
+  void logStart(int id, HttpRequest request);
+  void logComplete(int id, HttpResponse response);
+  void logError(int id, error);
 }
 
 class _NullLogger extends ServletLogger {
-  void log(int id, { HttpRequest request, HttpResponse response, error, String measure }) { }
+  void logStart(int id, HttpRequest request) {}
+  void logComplete(int id, HttpResponse response) {}
+  void logError(int id, error) {}
 }

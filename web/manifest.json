@@ -1,7 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "serve",
-  "short_name": "serve",
+  "name": "Picos",
   "description": "Serve a local folder on localhost.",
 
   "version": "0.0.1.0",

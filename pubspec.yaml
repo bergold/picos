@@ -1,4 +1,4 @@
-name: serve
+name: picos
 description: Serve a local folder on localhost.
 dependencies:
   chrome: any

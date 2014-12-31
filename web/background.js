@@ -6,7 +6,8 @@ chrome.app.runtime.onLaunched.addListener(function(launchData) {
       id: 'mainWindow',
       outerBounds: {
         width: 800,
-        height: 500
+        height: 500,
+        minWidth: 320
       },
       frame: {
         type: 'chrome',

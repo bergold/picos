@@ -23,11 +23,32 @@
       <section id="loggerContainer"></section>
     </div>
 
-    <!--<div class="dialog-backdrop">
-      <div id="dlgConfig" class="dialog">
-
+    <template id="tplDialog">
+      <div class="dialog-backdrop">
+        <div class="dialog-content">
+        </div>
       </div>
-    </div>-->
+    </template>
+
+    <template id="tplListIten">
+      <div class="list-item">
+        <div class="icon"></div>
+        <div class="row1">
+          <span data-bind-property="textContent" data-bind-value="method"></span>
+          <span data-bind-property="textContent" data-bind-value="uri"></span>
+        </div>
+        <div class="row2">
+          <span data-bind-property="textContent" data-bind-value="status">Pending</span>
+          &#x2014; <!-- m-dash -->
+          <span data-bind-property="textContent" data-bind-value="time"></span>
+          &#x2014; <!-- m-dash -->
+          <span data-bind-property="textContent" data-bind-value="duration"></span>
+        </div>
+        <div class="action">
+          <span class="icon icon-expand"></span>
+        </div>
+      </div>
+    </template>
 
     <script src="packages/chrome/bootstrap.js" defer></script>
     <script src="main.dart" type="application/dart"></script>

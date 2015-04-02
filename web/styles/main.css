@@ -14,83 +14,30 @@ body {
   height: 100%;
   overflow: hidden;
   display: flex;
-  flex-direction: row;
 }
 
   aside {
+    box-sizing: border-box;
+    margin: 16px 0 16px 16px;
+    padding: 16px;
     width: 256px;
     background: #2196F3;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    border-radius: 2px;
   }
   
   main {
     flex: 1;
+    padding: 16px;
   }
-
-header {
-  height: 64px;
-  background: #2196F3;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.26);
-  font-size: 20px;
-  font-weight: 500;
-  letter-spacing: 0.005em;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  padding: 0 24px;
-}
-
-section {
-  flex: 1;
-  overflow: auto;
-}
-
-.dropdown {
-  position: relative;
-}
-
-.dropdown .dropdown-value::after {
-  content: '';
-  position: relative;
-  display: inline-block;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 5px solid #fff;
-  height: 0;
-  width: 0;
-  left: 8px;
-  top: -5px;
-}
-
-.dropdown .dropdown-menu {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.26);
-  background: #ffffff;
-  color: rgba(0,0,0,0.87);
-  border-radius: 2px;
-  min-width: 192px;
-  padding: 16px 0;
-  font-size: 13px;
-}
-.dropdown .dropdown-menu .menu-entry {
-  display: flex;
-  height: 32px;
-  align-items: center;
-  padding: 0 24px;
-}
-.dropdown .dropdown-menu .menu-entry:hover:not([disabled]) {
-  background: rgba(0,0,0,0.06);
-}
-.dropdown .dropdown-menu .menu-entry[disabled] {
-  color: rgba(0,0,0,0.26);
-}
-.dropdown .dropdown-menu .menu-entry[hidden] {
-  display: none;
-}
-.dropdown .dropdown-menu .menu-divider {
-  height: 1px;
-  background: rgba(0,0,0,0.12);
-  margin-top: 7px;
-  margin-bottom: 8px;
-}
+  
+  main > section {
+    box-sizing: border-box;
+    padding: 16px;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    border-radius: 2px;
+    background: #202020;
+  }

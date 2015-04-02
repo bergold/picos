@@ -19,7 +19,7 @@ var dropdownEntryChoose;
 var loggerContainer;
 
 void main() {
-  body = html.document.body;
+  /*body = html.document.body;
   dropdownTrigger = html.querySelector('#dropdownTrigger');
   dropdownMenu = html.querySelector('#dropdownMenu');
   dropdownEntryLoading = html.querySelector('#dropdownEntryLoading');
@@ -42,7 +42,7 @@ void main() {
     triggerChoose();
   });
 
-  logger = new ElementServletLogger(loggerContainer);
+  logger = new ElementServletLogger(loggerContainer);*/
 }
 
 void triggerChoose() {

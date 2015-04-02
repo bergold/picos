@@ -1,26 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <title>Picos</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
   </head>
 
   <body>
 
-    <div id="container">
-      <header>
-        <div class="dropdown">
-          <div id="dropdownTrigger" class="dropdown-value">Select folder</div>
-          <div id="dropdownMenu" class="dropdown-menu" hidden>
-            <div id="dropdownEntryLoading" class="menu-entry" disabled hidden>Loading recent folders...</div>
-            <div id="dropdownEntryEmpty" class="menu-entry" disabled>No recent folders</div>
-            <div class="menu-divider"></div>
-            <div id="dropdownEntryChoose" class="menu-entry">Select folder...</div>
-          </div>
+    <div class="container">
+
+      <aside id="picosList">
+        <div class="list-item">
+          <div class="icon icon-add"></div>
+          <div>New Pico</div>
         </div>
-      </header>
-      <section id="loggerContainer"></section>
+      </aside>
+
+      <main id="viewContainer">
+        <section id="welcome">
+          <h1>Welcome</h1>
+        </section>
+      </main>
+
     </div>
 
     <template id="tplDialog">
@@ -30,7 +32,17 @@
       </div>
     </template>
 
-    <template id="tplListIten">
+    <template id="tplPicoItem">
+      <div class="card z0">
+        <div class="list-item">
+          <div></div>
+          <div class="icon"></div>
+        </div>
+        <div class="expander" hidden></div>
+      </div>
+    </template>
+
+    <template id="tplLogIten">
       <div class="list-item">
         <div class="icon"></div>
         <div class="row1">

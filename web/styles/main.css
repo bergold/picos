@@ -6,7 +6,7 @@ body {
   height: 100vh;
 }
 
-#container {
+.container {
   position: absolute;
   top: 0;
   left: 0;
@@ -14,8 +14,17 @@ body {
   height: 100%;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
+
+  aside {
+    width: 256px;
+    background: #2196F3;
+  }
+  
+  main {
+    flex: 1;
+  }
 
 header {
   height: 64px;

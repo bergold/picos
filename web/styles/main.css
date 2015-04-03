@@ -16,12 +16,16 @@ body {
 }
 
 aside {
-  margin: 24px;
+  padding: 24px;
   width: 256px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 main {
   flex: 1;
-  margin: 24px;
+  padding: 24px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 

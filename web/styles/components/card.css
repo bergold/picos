@@ -2,8 +2,9 @@
   position: relative;
   box-sizing: border-box;
   padding: 16px;
-  border-radius: 2px;
+  /*border-radius: 2px;*/
   background-color: #FFFFFF;
+  transition: margin .1s ease-out;
 }
 .card::before {
   position: absolute;
@@ -15,7 +16,7 @@
   display: block;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   pointer-events: none;
-  z-index: -1;
+  transition: box-shadow .1s ease-out;
 }
 
 .card-collapse {

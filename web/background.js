@@ -11,7 +11,7 @@ chrome.app.runtime.onLaunched.addListener(function(launchData) {
       },
       frame: {
         type: 'chrome',
-        color: '#222222'
+        color: '#BDBDBD'
       }
     }
   );

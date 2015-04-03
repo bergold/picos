@@ -1,0 +1,30 @@
+.card {
+  position: relative;
+  box-sizing: border-box;
+  padding: 16px;
+  border-radius: 2px;
+  background-color: #FFFFFF;
+}
+.card::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  content: '';
+  display: block;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.card-collapse {
+  border-radius: 0;
+}
+
+.card-expanded {
+  margin: 16px -8px;
+}
+.card-expanded::before {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}

@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="styles/main.css">
     <link rel="stylesheet" type="text/css" href="styles/theme.css">
     <link rel="stylesheet" type="text/css" href="styles/components/card.css">
+    <link rel="stylesheet" type="text/css" href="styles/components/list.css">
   </head>
 
   <body>
@@ -13,22 +14,24 @@
     <div class="container">
 
       <aside id="picoList">
-        <div class="list-insert-before card card-collapse">
-          <div class="icon icon-add"></div>
-          <div>New Pico</div>
+        <div class="list-insert-before card">
+          <div class="list-item">
+            <div class="icon icon-add"></div>
+            <div>New Pico</div>
+          </div>
         </div>
       </aside>
 
       <main id="viewContainer">
         <section id="welcomeView" class="card">
-          <h1>Welcome</h1>
+          <span style="display:block;text-align:center;font-size:3em;padding:24px;">Welcome</span>
         </section>
       </main>
 
     </div>
 
     <template id="tplPicoItemCard">
-      <div class="card card-collapse">
+      <div class="card">
         <div class="list-item pico-clickarea">
           <div class="pico-name"></div>
           <div class="icon icon-pico-stopped"></div>

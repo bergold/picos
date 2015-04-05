@@ -1,8 +1,6 @@
 .card {
   position: relative;
   box-sizing: border-box;
-  padding: 16px;
-  /*border-radius: 2px;*/
   background-color: #FFFFFF;
   transition: margin .1s ease-out;
 }
@@ -19,13 +17,9 @@
   transition: box-shadow .1s ease-out;
 }
 
-.card-collapse {
-  border-radius: 0;
-}
-
-.card-expanded {
+.card.selected {
   margin: 16px -8px;
 }
-.card-expanded::before {
+.card.selected::before {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }

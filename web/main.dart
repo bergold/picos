@@ -43,6 +43,10 @@ void main() {
   picoListCtrl.add(createPico('Pico 2'));
   picoListCtrl.add(createPico('Pico 3'));
   
+  picoListCtrl.onSelect.listen((pico) {
+    viewContainer.querySelector('.view-name-selected').text = pico.name;
+  });
+  
 }
 
 PicoItemCard createPico(name) {

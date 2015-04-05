@@ -9,8 +9,8 @@ class ListComponent {
   final HtmlElement _container;
   final Node _insertBefore;
   
-  final StreamController _onChangeCtrl = new StreamController.broadcast();
-  Stream get onChange => _onChangeCtrl.stream;
+  final StreamController _onSelectCtrl = new StreamController.broadcast();
+  Stream get onSelect => _onSelectCtrl.stream;
   
   List<ListComponentItem> _items = [];
   ListComponentItem _selected;
@@ -21,7 +21,7 @@ class ListComponent {
     if (!_items.contains(item)) throw new ArgumentError('Item is not in the list.');
     if (_selected != null) _selected.deselect();
     _selected = item..select();
-    _onChangeCtrl.add(item);
+    _onSelectCtrl.add(item);
   }
   
   void add(item) {

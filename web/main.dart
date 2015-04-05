@@ -1,26 +1,54 @@
 import 'dart:html' as html;
 
 import 'package:chrome_net/server.dart' show PicoServer, ServerLogger, HttpRequest, HttpResponse;
-
 import 'package:picos/static_servlet.dart';
+import 'package:picos/ui/list.dart';
+import 'package:picos/ui/cards.dart';
 
 var port = 5000;
 var server;
 var logger;
 var servlet;
 
-// UI elements
+// UI Elements
 var body;
-var dropdownTrigger;
+var picoList;
+var viewContainer;
+
+// UI Controller
+var picoListCtrl;
+/*var dropdownTrigger;
 var dropdownMenu;
 var dropdownEntryLoading;
 var dropdownEntryEmpty;
 var dropdownEntryChoose;
-var loggerContainer;
+var loggerContainer;*/
+
+// Templates
+var tplPicoItemCard;
+var tplLogItemCard;
 
 void main() {
-  /*body = html.document.body;
-  dropdownTrigger = html.querySelector('#dropdownTrigger');
+  
+  body = html.document.body;
+  picoList = html.querySelector('#picoList');
+  viewContainer = html.querySelector('#viewContainer');
+  
+  tplPicoItemCard = html.querySelector('#tplPicoItemCard');
+  tplLogItemCard = html.querySelector('#tplLogItemCard');
+  
+  picoListCtrl = new ListComponent(picoList, picoList.querySelector('.list-insert-before'));
+  
+  picoListCtrl.add(createPico('Pico 1'));
+  picoListCtrl.add(createPico('Pico 2'));
+  picoListCtrl.add(createPico('Pico 3'));
+  
+}
+
+PicoItemCard createPico(name) {
+  return new PicoItemCard(tplPicoItemCard, name);
+}
+  /*dropdownTrigger = html.querySelector('#dropdownTrigger');
   dropdownMenu = html.querySelector('#dropdownMenu');
   dropdownEntryLoading = html.querySelector('#dropdownEntryLoading');
   dropdownEntryEmpty = html.querySelector('#dropdownEntryEmpty');
@@ -42,10 +70,10 @@ void main() {
     triggerChoose();
   });
 
-  logger = new ElementServletLogger(loggerContainer);*/
-}
+  logger = new ElementServletLogger(loggerContainer);
+}*/
 
-void triggerChoose() {
+/*void triggerChoose() {
   if (server != null) {
     server.dispose();
   }
@@ -91,4 +119,4 @@ class ElementServletLogger extends ServletLogger {
     _container.append(element);
     _container.scrollTop = _container.scrollHeight - _container.clientHeight;
   }
-}
+}*/

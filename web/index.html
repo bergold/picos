@@ -12,55 +12,32 @@
 
     <div class="container">
 
-      <aside id="picosList">
-        <div class="card card-collapse">
-          <div class="icon icon-add"></div>
-          <div>Pico 1</div>
-        </div>
-        <div class="card card-collapse">
-          <div class="icon icon-add"></div>
-          <div>Pico 2</div>
-        </div>
-        <div class="card card-collapse card-expanded">
-          <div class="icon icon-add"></div>
-          <div>Pico 3</div>
-        </div>
-        <div class="card card-collapse">
-          <div class="icon icon-add"></div>
-          <div>Pico 4</div>
-        </div>
-        <div class="card card-collapse">
+      <aside id="picoList">
+        <div class="list-insert-before card card-collapse">
           <div class="icon icon-add"></div>
           <div>New Pico</div>
         </div>
       </aside>
 
       <main id="viewContainer">
-        <section id="welcome" class="card">
+        <section id="welcomeView" class="card">
           <h1>Welcome</h1>
         </section>
       </main>
 
     </div>
 
-    <template id="tplDialog">
-      <div class="dialog-backdrop">
-        <div class="dialog-content">
-        </div>
-      </div>
-    </template>
-
-    <template id="tplPicoItem">
-      <div class="card z0">
+    <template id="tplPicoItemCard">
+      <div class="card card-collapse">
         <div class="list-item">
-          <div></div>
-          <div class="icon"></div>
+          <div class="pico-name"></div>
+          <div class="icon icon-pico-stopped"></div>
         </div>
         <div class="expander" hidden></div>
       </div>
     </template>
 
-    <template id="tplLogIten">
+    <template id="tplLogItemCard">
       <div class="list-item">
         <div class="icon"></div>
         <div class="row1">

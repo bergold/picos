@@ -46,7 +46,10 @@ void main() {
 }
 
 PicoItemCard createPico(name) {
-  return new PicoItemCard(tplPicoItemCard, name);
+  var pico = new PicoItemCard(tplPicoItemCard, name);
+  //pico.onClick.listen((a) => html.window.console.log(a));
+  pico.onClick.listen((e) => picoListCtrl.select(pico));
+  return pico;
 }
   /*dropdownTrigger = html.querySelector('#dropdownTrigger');
   dropdownMenu = html.querySelector('#dropdownMenu');

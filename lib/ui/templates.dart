@@ -8,7 +8,7 @@ abstract class TemplateComponent {
   HtmlElement get template => _template;
   
   TemplateComponent(TemplateElement tpl) {
-    _template = document.importNode(tpl.content, true);
+    _template = (document.importNode(tpl.content, true) as DocumentFragment).children.single;
   }
   
 }

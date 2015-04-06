@@ -4,6 +4,7 @@ import 'dart:html';
 import 'dart:async';
 import 'templates.dart';
 import 'list.dart';
+import 'view.dart';
 
 abstract class Card extends TemplateComponent {
   
@@ -11,9 +12,10 @@ abstract class Card extends TemplateComponent {
   
 }
 
-class ListItemCard extends Card implements ListComponentItem {
+class ListItemCard extends Card implements ListComponentItem, HasView {
   
   String name;
+  View view;
   
   StreamController _onClickCtrl = new StreamController.broadcast();
   Stream get onClick => _onClickCtrl.stream;

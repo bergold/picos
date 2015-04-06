@@ -47,13 +47,15 @@ void main() {
   picoListCtrl = new ListComponent(picoList);
   viewContainerCtrl = new ListComponent(viewContainer);
   
+  viewContainerCtrl.add(new View(viewWelcome), true);
+  
   initPicoList();
-  initViewContainer();
   
 }
 
 void initPicoList() {
   var btnNewPico = createItemCard(tplBtnItemCard, 'New Pico');
+  viewContainerCtrl.add(btnNewPico.view = new View(viewNewPico));
   picoListCtrl.add(btnNewPico);
   picoListCtrl.insertBefore = btnNewPico;
   
@@ -62,18 +64,16 @@ void initPicoList() {
   picoListCtrl.add(createItemCard(tplPicoItemCard, 'Pico 3'));
   
   picoListCtrl.onSelect.listen((item) {
-    viewContainer.querySelector('.view-name-selected').text = item.name;
+    if (item is HasView && item.view != null) {
+      viewContainerCtrl.select(item.view);
+    }
   });
-}
-
-void initViewContainer() {
-  viewContainerCtrl.add(new View(viewWelcome), true);
-  viewContainerCtrl.add(new View(viewNewPico));
 }
 
 
 createItemCard(tpl, name) {
   var item = new ListItemCard(tpl, name);
+  viewContainerCtrl.add(item.view = new PicoView(viewPico, name));
   item.onClick.listen((e) => picoListCtrl.select(item));
   return item;
 }

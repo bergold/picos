@@ -12,3 +12,15 @@ class View extends TemplateComponent implements ListComponentItem {
   void deselect() { template.attributes['hidden'] = ''; }
   
 }
+
+class PicoView extends View {
+  
+  PicoView(TemplateElement tpl, name) : super(tpl) {
+    template.querySelector('.pico-name').text = name;
+  }
+  
+}
+
+abstract class HasView {
+  View view;
+}

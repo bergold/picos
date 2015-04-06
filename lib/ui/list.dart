@@ -19,6 +19,7 @@ class ListComponent {
   
   void select(item) {
     if (!_items.contains(item)) throw new ArgumentError('Item is not in the list.');
+    if (_selected == item) return;
     if (_selected != null) _selected.deselect();
     _selected = item..select();
     _onSelectCtrl.add(item);

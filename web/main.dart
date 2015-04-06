@@ -35,13 +35,13 @@ void main() {
   
   picoListCtrl = new ListComponent(picoList);
   
-  var btnNewPico = createPico(tplBtnItemCard, 'New Pico');
+  var btnNewPico = createListItemCard(tplBtnItemCard, 'New Pico');
   picoListCtrl.add(btnNewPico);
   picoListCtrl.insertBefore = btnNewPico;
   
-  picoListCtrl.add(createPico(tplPicoItemCard, 'Pico 1'));
-  picoListCtrl.add(createPico(tplPicoItemCard, 'Pico 2'));
-  picoListCtrl.add(createPico(tplPicoItemCard, 'Pico 3'));
+  picoListCtrl.add(createListItemCard(tplPicoItemCard, 'Pico 1'));
+  picoListCtrl.add(createListItemCard(tplPicoItemCard, 'Pico 2'));
+  picoListCtrl.add(createListItemCard(tplPicoItemCard, 'Pico 3'));
   
   picoListCtrl.onSelect.listen((pico) {
     viewContainer.querySelector('.view-name-selected').text = pico.name;
@@ -49,10 +49,10 @@ void main() {
   
 }
 
-PicoItemCard createPico(tpl, name) {
-  var pico = new PicoItemCard(tpl, name);
-  pico.onClick.listen((e) => picoListCtrl.select(pico));
-  return pico;
+ListItemCard createListItemCard(tpl, name) {
+  var item = new ListItemCard(tpl, name);
+  item.onClick.listen((e) => picoListCtrl.select(item));
+  return item;
 }
 
   /*dropdownEntryChoose.onClick.listen((e) {

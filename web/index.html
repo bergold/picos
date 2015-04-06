@@ -18,14 +18,13 @@
       </aside>
 
       <main id="viewContainer">
-        <section id="welcomeView" class="card">
-          <span style="display:block;text-align:center;font-size:3em;padding:24px;">Welcome</span>
-          <span style="display:block;text-align:center;padding:24px;" class="view-name-selected"></span>
-        </section>
       </main>
 
     </div>
 
+
+    <!-- Templates -->
+    
     <template id="tplPicoItemCard">
       <div class="card card-expandable">
         <div class="list-item pico-clickarea">
@@ -46,25 +45,49 @@
     </template>
 
     <template id="tplLogItemCard">
-      <div class="list-item">
-        <div class="icon"></div>
-        <div class="row1">
-          <span data-bind-property="textContent" data-bind-value="method"></span>
-          <span data-bind-property="textContent" data-bind-value="uri"></span>
+      <div class="card card-expandable">
+        <div class="list-item pico-clickarea hide-selected">
+          <div class="icon"></div>
+          <div class="row1">
+            <span class="pico-method"></span>
+            <span class="pico-uri"></span>
+          </div>
+          <div class="row2">
+            <span class="pico-status">Pending</span>
+            &#x2014; <!-- m-dash -->
+            <span class="pico-time"></span>
+            &#x2014; <!-- m-dash -->
+            <span class="pico-duration"></span>
+          </div>
+          <div class="icon icon-unfold-more">
+          </div>
         </div>
-        <div class="row2">
-          <span data-bind-property="textContent" data-bind-value="status">Pending</span>
-          &#x2014; <!-- m-dash -->
-          <span data-bind-property="textContent" data-bind-value="time"></span>
-          &#x2014; <!-- m-dash -->
-          <span data-bind-property="textContent" data-bind-value="duration"></span>
-        </div>
-        <div class="action">
-          <span class="icon icon-expand"></span>
-        </div>
+        <div class="show-selected">Expanded</div>
       </div>
     </template>
-
+    
+    
+    <!-- Views -->
+    
+    <template id="viewWelcome">
+      <section class="card" hidden>
+        <span style="display:block;text-align:center;font-size:3em;padding:24px;">Welcome</span>
+        <span style="display:block;text-align:center;padding:24px;" class="view-name-selected"></span>
+      </section>
+    </template>
+    
+    <template id="viewNewPico">
+      <section class="card" hidden>
+        <span style="display:block;text-align:center;font-size:3em;padding:24px;">New Pico</span>
+      </section>
+    </template>
+    
+    <template id="viewPico">
+      <section class="card" hidden>
+        <span style="display:block;text-align:center;font-size:3em;padding:24px;" class="pico-name"></span>
+      </section>
+    </template>
+    
     <script src="packages/chrome/bootstrap.js" defer></script>
     <script src="main.dart" type="application/dart"></script>
   </body>

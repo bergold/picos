@@ -31,7 +31,7 @@ class ListComponent {
     _selected = null;
   }
   
-  void add(item) {
+  void add(item, [selectItem=false]) {
     if (item is! TemplateComponent) throw new ArgumentError('Item needs to be a TemplateComponent.');
     if (item is! ListComponentItem) throw new ArgumentError('Item needs to implement the ListComponentItem interface');
     if (insertBefore != null && _items.contains(insertBefore)) {
@@ -41,6 +41,7 @@ class ListComponent {
       _items.add(item);
       _container.append((item as TemplateComponent).template);
     }
+    if (selectItem) select(item);
   }
   
   void remove(item) {

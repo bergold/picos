@@ -1,4 +1,4 @@
-library picos.ui.cards;
+library picos.ui.card;
 
 import 'dart:html';
 import 'dart:async';

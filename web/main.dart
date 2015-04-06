@@ -3,7 +3,8 @@ import 'dart:html' as html;
 import 'package:chrome_net/server.dart' show PicoServer, ServerLogger, HttpRequest, HttpResponse;
 import 'package:picos/static_servlet.dart';
 import 'package:picos/ui/list.dart';
-import 'package:picos/ui/cards.dart';
+import 'package:picos/ui/card.dart';
+import 'package:picos/ui/view.dart';
 
 var port = 5000;
 var server;
@@ -15,13 +16,19 @@ var body;
 var picoList;
 var viewContainer;
 
-// UI Controller
-var picoListCtrl;
-
 // Templates
 var tplPicoItemCard;
 var tplBtnItemCard;
 var tplLogItemCard;
+
+// View templates
+var viewWelcome;
+var viewNewPico;
+var viewPico;
+
+// Controllers
+var picoListCtrl;
+var viewContainerCtrl;
 
 void main() {
   
@@ -33,8 +40,19 @@ void main() {
   tplBtnItemCard = html.querySelector('#tplBtnItemCard');
   tplLogItemCard = html.querySelector('#tplLogItemCard');
   
-  picoListCtrl = new ListComponent(picoList);
+  viewWelcome = html.querySelector('#viewWelcome');
+  viewNewPico = html.querySelector('#viewNewPico');
+  viewPico = html.querySelector('#viewPico');
   
+  picoListCtrl = new ListComponent(picoList);
+  viewContainerCtrl = new ListComponent(viewContainer);
+  
+  initPicoList();
+  initViewContainer();
+  
+}
+
+void initPicoList() {
   var btnNewPico = createItemCard(tplBtnItemCard, 'New Pico');
   picoListCtrl.add(btnNewPico);
   picoListCtrl.insertBefore = btnNewPico;
@@ -46,10 +64,15 @@ void main() {
   picoListCtrl.onSelect.listen((item) {
     viewContainer.querySelector('.view-name-selected').text = item.name;
   });
-  
 }
 
-ListItemCard createItemCard(tpl, name) {
+void initViewContainer() {
+  viewContainerCtrl.add(new View(viewWelcome), true);
+  viewContainerCtrl.add(new View(viewNewPico));
+}
+
+
+createItemCard(tpl, name) {
   var item = new ListItemCard(tpl, name);
   item.onClick.listen((e) => picoListCtrl.select(item));
   return item;

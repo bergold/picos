@@ -59,9 +59,9 @@ void initPicoList() {
   picoListCtrl.add(btnNewPico);
   picoListCtrl.insertBefore = btnNewPico;
   
-  picoListCtrl.add(createItemCard(tplPicoItemCard, 'Pico 1'));
-  picoListCtrl.add(createItemCard(tplPicoItemCard, 'Pico 2'));
-  picoListCtrl.add(createItemCard(tplPicoItemCard, 'Pico 3'));
+  picoListCtrl.add(createItemCard(tplPicoItemCard, 'Pico 1', true));
+  picoListCtrl.add(createItemCard(tplPicoItemCard, 'Pico 2', true));
+  picoListCtrl.add(createItemCard(tplPicoItemCard, 'Pico 3', true));
   
   picoListCtrl.onSelect.listen((item) {
     if (item is HasView && item.view != null) {
@@ -71,9 +71,9 @@ void initPicoList() {
 }
 
 
-createItemCard(tpl, name) {
+createItemCard(tpl, name, [withView = false]) {
   var item = new ListItemCard(tpl, name);
-  viewContainerCtrl.add(item.view = new PicoView(viewPico, name));
+  if (withView) viewContainerCtrl.add(item.view = new PicoView(viewPico, name));
   item.onClick.listen((e) => picoListCtrl.select(item));
   return item;
 }

@@ -17,15 +17,10 @@ var viewContainer;
 
 // UI Controller
 var picoListCtrl;
-/*var dropdownTrigger;
-var dropdownMenu;
-var dropdownEntryLoading;
-var dropdownEntryEmpty;
-var dropdownEntryChoose;
-var loggerContainer;*/
 
 // Templates
 var tplPicoItemCard;
+var tplBtnItemCard;
 var tplLogItemCard;
 
 void main() {
@@ -35,13 +30,18 @@ void main() {
   viewContainer = html.querySelector('#viewContainer');
   
   tplPicoItemCard = html.querySelector('#tplPicoItemCard');
+  tplBtnItemCard = html.querySelector('#tplBtnItemCard');
   tplLogItemCard = html.querySelector('#tplLogItemCard');
   
-  picoListCtrl = new ListComponent(picoList, picoList.querySelector('.list-insert-before'));
+  picoListCtrl = new ListComponent(picoList);
   
-  picoListCtrl.add(createPico('Pico 1'));
-  picoListCtrl.add(createPico('Pico 2'));
-  picoListCtrl.add(createPico('Pico 3'));
+  var btnNewPico = createPico(tplBtnItemCard, 'New Pico');
+  picoListCtrl.add(btnNewPico);
+  picoListCtrl.insertBefore = btnNewPico;
+  
+  picoListCtrl.add(createPico(tplPicoItemCard, 'Pico 1'));
+  picoListCtrl.add(createPico(tplPicoItemCard, 'Pico 2'));
+  picoListCtrl.add(createPico(tplPicoItemCard, 'Pico 3'));
   
   picoListCtrl.onSelect.listen((pico) {
     viewContainer.querySelector('.view-name-selected').text = pico.name;
@@ -49,30 +49,13 @@ void main() {
   
 }
 
-PicoItemCard createPico(name) {
-  var pico = new PicoItemCard(tplPicoItemCard, name);
-  //pico.onClick.listen((a) => html.window.console.log(a));
+PicoItemCard createPico(tpl, name) {
+  var pico = new PicoItemCard(tpl, name);
   pico.onClick.listen((e) => picoListCtrl.select(pico));
   return pico;
 }
-  /*dropdownTrigger = html.querySelector('#dropdownTrigger');
-  dropdownMenu = html.querySelector('#dropdownMenu');
-  dropdownEntryLoading = html.querySelector('#dropdownEntryLoading');
-  dropdownEntryEmpty = html.querySelector('#dropdownEntryEmpty');
-  dropdownEntryChoose = html.querySelector('#dropdownEntryChoose');
-  loggerContainer = html.querySelector('#loggerContainer');
 
-  body.onClick.listen((e) {
-    dropdownMenu.attributes['hidden'] = '';
-  });
-  dropdownMenu.onClick.listen((e) => e.stopPropagation());
-
-  dropdownTrigger.onClick.listen((e) {
-    e.stopPropagation();
-    dropdownMenu.attributes.remove('hidden');
-  });
-
-  dropdownEntryChoose.onClick.listen((e) {
+  /*dropdownEntryChoose.onClick.listen((e) {
     dropdownMenu.attributes['hidden'] = '';
     triggerChoose();
   });

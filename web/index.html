@@ -14,12 +14,6 @@
     <div class="container">
 
       <aside id="picoList">
-        <div class="list-insert-before card">
-          <div class="list-item">
-            <div class="icon icon-add"></div>
-            <div>New Pico</div>
-          </div>
-        </div>
       </aside>
 
       <main id="viewContainer">
@@ -32,12 +26,21 @@
     </div>
 
     <template id="tplPicoItemCard">
-      <div class="card">
+      <div class="card card-expandable">
         <div class="list-item pico-clickarea">
           <div class="pico-name"></div>
           <div class="icon icon-pico-stopped"></div>
         </div>
-        <div class="expander" hidden></div>
+        <div class="show-selected">This are the options.</div>
+      </div>
+    </template>
+    
+    <template id="tplBtnItemCard">
+      <div class="card">
+        <div class="list-item pico-clickarea">
+          <div class="icon"></div>
+          <div class="pico-name"></div>
+        </div>
       </div>
     </template>
 

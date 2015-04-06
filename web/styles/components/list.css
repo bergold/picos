@@ -1,6 +1,20 @@
 .list-item {
   display: flex;
   height: 48px;
-  padding: 0 16px;
   align-items: center;
 }
+
+.list-item > div {
+  flex: 1;
+  margin: 0 16px;
+}
+
+.list-item .icon {
+  flex: none;
+  margin: 0 16px;
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.54);
+}
+

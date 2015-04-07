@@ -1,13 +1,12 @@
 library picos;
 
 import 'package:chrome/chrome_app.dart';
-import 'ui/card.dart';
-import 'ui/view.dart';
+import 'ui/pico.dart';
 
 class Pico {
   
   final PicoConfig config;
-  final ListItemCard card;
+  final PicoCard card;
   final PicoView view;
   
   Pico(this.config, this.card, this.view);

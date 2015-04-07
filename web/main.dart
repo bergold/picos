@@ -1,15 +1,10 @@
-import 'dart:html' as html;
 
-import 'package:chrome_net/server.dart' show PicoServer, ServerLogger, HttpRequest, HttpResponse;
-import 'package:picos/static_servlet.dart';
+import 'dart:html' as html;
+import 'package:picos/picos.dart';
+import 'package:picos/ui/pico.dart';
 import 'package:picos/ui/list.dart';
 import 'package:picos/ui/card.dart';
 import 'package:picos/ui/view.dart';
-
-var port = 5000;
-var server;
-var logger;
-var servlet;
 
 // UI Elements
 var body;
@@ -49,19 +44,23 @@ void main() {
   
   viewContainerCtrl.add(new View(viewWelcome), true);
   
+  initNewPicoBtn();
   initPicoList();
   
 }
 
+void initNewPicoBtn() {
+  var newPicoBtn = new ListItemCard(tplBtnItemCard, 'New Pico');
+  viewContainerCtrl.add(newPicoBtn.view = new View(viewNewPico));
+  newPicoBtn.onClick.listen((e) => picoListCtrl.select(newPicoBtn));
+  picoListCtrl.add(newPicoBtn);
+  picoListCtrl.insertBefore = newPicoBtn;
+}
+
 void initPicoList() {
-  var btnNewPico = createItemCard(tplBtnItemCard, 'New Pico');
-  viewContainerCtrl.add(btnNewPico.view = new View(viewNewPico));
-  picoListCtrl.add(btnNewPico);
-  picoListCtrl.insertBefore = btnNewPico;
-  
-  picoListCtrl.add(createItemCard(tplPicoItemCard, 'Pico 1', true));
-  picoListCtrl.add(createItemCard(tplPicoItemCard, 'Pico 2', true));
-  picoListCtrl.add(createItemCard(tplPicoItemCard, 'Pico 3', true));
+  createPico('Pico 1');
+  createPico('Pico 2');
+  createPico('Pico 3');
   
   picoListCtrl.onSelect.listen((item) {
     if (item is HasView && item.view != null) {
@@ -71,20 +70,20 @@ void initPicoList() {
 }
 
 
-createItemCard(tpl, name, [withView = false]) {
-  var item = new ListItemCard(tpl, name);
-  if (withView) viewContainerCtrl.add(item.view = new PicoView(viewPico, name));
-  item.onClick.listen((e) => picoListCtrl.select(item));
-  return item;
+createPico(name) {
+  var view = new PicoView(viewPico, name);
+  viewContainerCtrl.add(view);
+  
+  var card = new PicoCard(tplPicoItemCard, name);
+  card.view = view;
+  card.onClick.listen((e) => picoListCtrl.select(card));
+  picoListCtrl.add(card);
+  
+  var config = new PicoConfig(null, null);
+  
+  var pico = new Pico(config, card, view);
+  return pico;
 }
-
-  /*dropdownEntryChoose.onClick.listen((e) {
-    dropdownMenu.attributes['hidden'] = '';
-    triggerChoose();
-  });
-
-  logger = new ElementServletLogger(loggerContainer);
-}*/
 
 /*void triggerChoose() {
   if (server != null) {
@@ -103,33 +102,4 @@ createItemCard(tpl, name, [withView = false]) {
     logger.logStatus("Server running on ${info.localAddress}:${info.localPort.toString()}");
   });
 }
-
-class PrintServletLogger extends ServletLogger {
-  void logStart(int id, HttpRequest request) => print('[$id] > $request');
-  void logComplete(int id, HttpResponse response) => print('[$id] < $response');
-  void logError(int id, error) => print('[$id] ! $error');
-}
-
-class ElementServletLogger extends ServletLogger {
-
-  final html.HtmlElement _container;
-
-  ElementServletLogger(this._container);
-
-  void logStart(int id, HttpRequest request) => _parse({ 'id': id, 'icon': '>', 'msg': request });
-  void logComplete(int id, HttpResponse response) => _parse({ 'id': id, 'icon': '<', 'msg': response });
-  void logError(int id, error) => _parse({ 'id': id, 'icon': '!', 'msg': error });
-  void logStatus(String msg) => _parse({ 'id': 'info', 'icon': '#', 'msg': msg });
-
-  void _parse(Map data) {
-    var text = '[${data['id']}] ${data['icon']} ${data['msg']}';
-    var div = new html.DivElement();
-    div.text = text;
-    _append(div);
-  }
-
-  void _append(html.HtmlElement element) {
-    _container.append(element);
-    _container.scrollTop = _container.scrollHeight - _container.clientHeight;
-  }
-}*/
+*/

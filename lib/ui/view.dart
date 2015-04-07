@@ -13,14 +13,6 @@ class View extends TemplateComponent implements ListComponentItem {
   
 }
 
-class PicoView extends View {
-  
-  PicoView(TemplateElement tpl, name) : super(tpl) {
-    template.querySelector('.pico-name').text = name;
-  }
-  
-}
-
 abstract class HasView {
   View view;
 }

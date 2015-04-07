@@ -2,7 +2,7 @@ library picos.ui.list;
 
 import 'dart:html';
 import 'dart:async';
-import 'templates.dart';
+import 'template.dart';
 
 class ListComponent {
   

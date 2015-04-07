@@ -1,7 +1,7 @@
 library picos.ui.view;
 
 import 'dart:html';
-import 'templates.dart';
+import 'template.dart';
 import 'list.dart';
 
 class View extends TemplateComponent implements ListComponentItem {

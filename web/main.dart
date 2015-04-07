@@ -13,7 +13,7 @@ var viewContainer;
 
 // Templates
 var tplPicoItemCard;
-var tplBtnItemCard;
+var tplNewPicoItemCard;
 var tplLogItemCard;
 
 // View templates
@@ -32,7 +32,7 @@ void main() {
   viewContainer = html.querySelector('#viewContainer');
   
   tplPicoItemCard = html.querySelector('#tplPicoItemCard');
-  tplBtnItemCard = html.querySelector('#tplBtnItemCard');
+  tplNewPicoItemCard = html.querySelector('#tplNewPicoItemCard');
   tplLogItemCard = html.querySelector('#tplLogItemCard');
   
   viewWelcome = html.querySelector('#viewWelcome');
@@ -50,7 +50,7 @@ void main() {
 }
 
 void initNewPicoBtn() {
-  var newPicoBtn = new ListItemCard(tplBtnItemCard, 'New Pico');
+  var newPicoBtn = new ListItemCard(tplNewPicoItemCard);
   viewContainerCtrl.add(newPicoBtn.view = new View(viewNewPico));
   newPicoBtn.onClick.listen((e) => picoListCtrl.select(newPicoBtn));
   picoListCtrl.add(newPicoBtn);
@@ -71,10 +71,12 @@ void initPicoList() {
 
 
 createPico(name) {
-  var view = new PicoView(viewPico, name);
+  var view = new PicoView(viewPico);
+  view.name = name;
   viewContainerCtrl.add(view);
   
-  var card = new PicoCard(tplPicoItemCard, name);
+  var card = new PicoCard(tplPicoItemCard);
+  card.name = name;
   card.view = view;
   card.onClick.listen((e) => picoListCtrl.select(card));
   picoListCtrl.add(card);

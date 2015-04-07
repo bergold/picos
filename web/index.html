@@ -28,18 +28,21 @@
     <template id="tplPicoItemCard">
       <div class="card card-expandable">
         <div class="list-item pico-clickarea">
-          <div class="pico-name"></div>
+          <div data-inject="name"></div>
           <div class="icon icon-pico-stopped pico-status"></div>
         </div>
-        <div class="show-selected">This are the options.</div>
+        <div class="show-selected">
+          This are the options of
+          <span data-inject="name"></span>
+        </div>
       </div>
     </template>
     
-    <template id="tplBtnItemCard">
+    <template id="tplNewPicoItemCard">
       <div class="card">
         <div class="list-item pico-clickarea">
           <div class="icon icon-add"></div>
-          <div class="pico-name"></div>
+          <div>New Pico</div>
         </div>
       </div>
     </template>
@@ -83,7 +86,9 @@
     
     <template id="viewPico">
       <section class="card" hidden>
-        <span style="display:block;text-align:center;font-size:3em;padding:24px;" class="pico-name"></span>
+        <div style="text-align:center;font-size:3em;padding:24px;">
+          <span data-inject="name"></span>
+        </div>
         <span style="display:block;text-align:center;padding-bottom:24px;">No logs available</span>
       </section>
     </template>

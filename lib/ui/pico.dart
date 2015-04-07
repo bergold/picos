@@ -1,17 +1,22 @@
 library picos.ui.pico;
 
 import 'dart:html';
+import 'template.dart';
 import 'card.dart';
 import 'view.dart';
 
-class PicoCard extends ListItemCard {
-  PicoCard(TemplateElement tpl, [name = '']) : super(tpl, name);
+class PicoCard extends ListItemCard with TemplateInjector {
+  
+  set name(String v) => injectText('name', v);
+  
+  PicoCard(TemplateElement tpl) : super(tpl);
+  
 }
 
-class PicoView extends View {
+class PicoView extends View with TemplateInjector {
   
-  PicoView(TemplateElement tpl, name) : super(tpl) {
-    template.querySelector('.pico-name').text = name;
-  }
+  set name(String v) => injectText('name', v);
+  
+  PicoView(TemplateElement tpl) : super(tpl);
   
 }

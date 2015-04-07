@@ -12,3 +12,13 @@ abstract class TemplateComponent {
   }
   
 }
+
+abstract class TemplateInjector {
+  
+  HtmlElement get template;
+  
+  injectText(key, value) {
+    template.querySelectorAll('[data-inject=${key}]').forEach((e) => e.text = value);
+  }
+  
+}

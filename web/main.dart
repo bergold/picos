@@ -51,7 +51,7 @@ void main() {
 
 void initNewPicoBtn() {
   var newPicoBtn = new ListItemCard(tplNewPicoItemCard);
-  viewContainerCtrl.add(newPicoBtn.view = new View(viewNewPico));
+  viewContainerCtrl.add(newPicoBtn.view = new NewPicoView(viewNewPico));
   newPicoBtn.onClick.listen((e) => picoListCtrl.select(newPicoBtn));
   picoListCtrl.add(newPicoBtn);
   picoListCtrl.insertBefore = newPicoBtn;

@@ -37,11 +37,12 @@ class PicoConfig {
   
   toJson() {
     return {
-      'entry': fileSystem.retainEntry(entry),
+      'entry': id,
       'port': port
     };
   }
   
+  String get id => fileSystem.retainEntry(entry);
   String get name => entry.name;
   Future<String> get path => fileSystem.getDisplayPath(entry);
   
@@ -49,20 +50,28 @@ class PicoConfig {
 
 class PicoManager {
   
-  List<Pico> _picos = [];
+  List<PicoConfig> _picos = [];
   
   PicoManager();
   
-  Future<Pico> createNewPicoConfig() {
+  Future<PicoConfig> createNewPicoConfig() {
     return chooseEntry().then((entry) {
       return new PicoConfig(entry, getNextPort());
     });
   }
   
-  save(Pico pico) {
+  void save(Pico pico) {
     
   }
-  saveAll() => _picos.forEach(save);
+  void saveAll() => _picos.forEach(save);
+  
+  Future<PicoConfig> restore(id) {
+    // Todo: read storage pico_{id} and create new picoconfig from json.
+  }
+  Stream<PicoConfig> restoreAll() {
+    // Todo: read storage pico_index and call restore for each entry.
+    return F_picos;
+  }
   
   chooseEntry() {
     var options = new ChooseEntryOptions(type: ChooseEntryType.OPEN_DIRECTORY);

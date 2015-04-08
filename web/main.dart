@@ -60,9 +60,11 @@ void initNewPicoBtn() {
 }
 
 void initPicoList() {
-  createPico('Pico 1');
-  createPico('Pico 2');
-  createPico('Pico 3');
+  picoManager.restoreAll()
+    .forEach(createPicoFromConfig)
+    .catchError((e) {
+      print(e);
+    });
   
   picoListCtrl.onSelect.listen((item) {
     if (item is HasView) {
@@ -78,40 +80,28 @@ void initPicoList() {
 /// Triggers the creation of a new Pico.
 /// Gets triggered by the newPicoBtn.onClick handler.
 void createNewPico() {
-  picoManager.createNewPicoConfig().then((config) {
-    var view = new PicoView(viewPico);
-    view.name = config.name;
-    viewContainerCtrl.add(view);
-    
-    var card = new PicoCard(tplPicoItemCard);
-    card.view = view;
-    card.name = config.name;
-    config.path.then((p) => card.path = p);
-    card.port = config.port;
-    card.onClick.listen((e) => picoListCtrl.select(card));
-    picoListCtrl.add(card);
-
-    return new Pico(config, card, view);
-  }).catchError((e) {
-    print(e);
-  });
+  picoManager.createNewPicoConfig()
+    .then(createPicoFromConfig)
+    .catchError((e) {
+      print(e);
+    });
 }
 
-createPico(name) {
+createPicoFromConfig(config) {
   var view = new PicoView(viewPico);
-  view.name = name;
   viewContainerCtrl.add(view);
   
   var card = new PicoCard(tplPicoItemCard);
-  card.name = name;
   card.view = view;
   card.onClick.listen((e) => picoListCtrl.select(card));
   picoListCtrl.add(card);
   
-  var config = new PicoConfig(null, null);
-  
-  var pico = new Pico(config, card, view);
-  return pico;
+  view.name = config.name;
+  card.name = config.name;
+  card.port = config.port;
+  config.path.then((p) => card.path = p);
+
+  return new Pico(config, card, view);
 }
 
 /*void triggerChoose() {

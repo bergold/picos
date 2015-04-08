@@ -1,5 +1,6 @@
 library picos;
 
+import 'dart:async';
 import 'package:chrome/chrome_app.dart';
 import 'ui/pico.dart';
 
@@ -39,6 +40,37 @@ class PicoConfig {
       'entry': fileSystem.retainEntry(entry),
       'port': port
     };
+  }
+  
+  String get name => entry.name;
+  Future<String> get path => fileSystem.getDisplayPath(entry);
+  
+}
+
+class PicoManager {
+  
+  List<Pico> _picos = [];
+  
+  PicoManager();
+  
+  Future<Pico> createNewPicoConfig() {
+    return chooseEntry().then((entry) {
+      return new PicoConfig(entry, getNextPort());
+    });
+  }
+  
+  save(Pico pico) {
+    
+  }
+  saveAll() => _picos.forEach(save);
+  
+  chooseEntry() {
+    var options = new ChooseEntryOptions(type: ChooseEntryType.OPEN_DIRECTORY);
+    return fileSystem.chooseEntry(options).then((res) => res.entry);
+  }
+  
+  getNextPort() {
+    return 5000;
   }
   
 }

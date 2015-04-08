@@ -6,8 +6,9 @@ import 'package:picos/ui/list.dart';
 import 'package:picos/ui/card.dart';
 import 'package:picos/ui/view.dart';
 
+var picoManager;
+
 // UI Elements
-var body;
 var picoList;
 var viewContainer;
 
@@ -27,7 +28,8 @@ var viewContainerCtrl;
 
 void main() {
   
-  body = html.document.body;
+  picoManager = new PicoManager();
+  
   picoList = html.querySelector('#picoList');
   viewContainer = html.querySelector('#viewContainer');
   
@@ -52,6 +54,7 @@ void main() {
 void initNewPicoBtn() {
   var newPicoBtn = new ListItemCard(tplNewPicoItemCard);
   newPicoBtn.onClick.listen((e) => picoListCtrl.select(newPicoBtn));
+  newPicoBtn.onClick.listen((e) => createNewPico());
   picoListCtrl.add(newPicoBtn);
   picoListCtrl.insertBefore = newPicoBtn;
 }
@@ -72,6 +75,25 @@ void initPicoList() {
   });
 }
 
+/// Triggers the creation of a new Pico.
+/// Gets triggered by the newPicoBtn.onClick handler.
+void createNewPico() {
+  picoManager.createNewPicoConfig().then((config) {
+    var view = new PicoView(viewPico);
+    view.name = config.name;
+    viewContainerCtrl.add(view);
+    
+    var card = new PicoCard(tplPicoItemCard);
+    card.view = view;
+    card.name = config.name;
+    config.path.then((p) => card.path = p);
+    card.port = config.port;
+    card.onClick.listen((e) => picoListCtrl.select(card));
+    picoListCtrl.add(card);
+
+    return new Pico(config, card, view);
+  });
+}
 
 createPico(name) {
   var view = new PicoView(viewPico);

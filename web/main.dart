@@ -51,7 +51,6 @@ void main() {
 
 void initNewPicoBtn() {
   var newPicoBtn = new ListItemCard(tplNewPicoItemCard);
-  viewContainerCtrl.add(newPicoBtn.view = new NewPicoView(viewNewPico));
   newPicoBtn.onClick.listen((e) => picoListCtrl.select(newPicoBtn));
   picoListCtrl.add(newPicoBtn);
   picoListCtrl.insertBefore = newPicoBtn;
@@ -63,8 +62,12 @@ void initPicoList() {
   createPico('Pico 3');
   
   picoListCtrl.onSelect.listen((item) {
-    if (item is HasView && item.view != null) {
-      viewContainerCtrl.select(item.view);
+    if (item is HasView) {
+      if (item.view != null) {
+        viewContainerCtrl.select(item.view);
+      } else {
+        viewContainerCtrl.deselect();
+      }
     }
   });
 }

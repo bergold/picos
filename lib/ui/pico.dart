@@ -20,15 +20,3 @@ class PicoView extends View with TemplateInjector {
   PicoView(TemplateElement tpl) : super(tpl);
   
 }
-
-class NewPicoView extends View {
-  
-  NewPicoView(TemplateElement tpl) : super(tpl);
-  
-  @override
-  void select() {
-    super.select();
-    print('trigger choose');
-  }
-  
-}

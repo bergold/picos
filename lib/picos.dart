@@ -70,7 +70,7 @@ class PicoManager {
   }
   Stream<PicoConfig> restoreAll() {
     // Todo: read storage pico_index and call restore for each entry.
-    return F_picos;
+    return new Stream.fromIterable(_picos);
   }
   
   chooseEntry() {

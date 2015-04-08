@@ -82,6 +82,7 @@ void initPicoList() {
 void createNewPico() {
   picoManager.createNewPicoConfig()
     .then(createPicoFromConfig)
+    .then((p) => picoListCtrl.select(p.card))
     .catchError((e) {
       print(e);
     });

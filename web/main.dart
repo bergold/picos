@@ -92,6 +92,8 @@ void createNewPico() {
     picoListCtrl.add(card);
 
     return new Pico(config, card, view);
+  }).catchError((e) {
+    print(e);
   });
 }
 

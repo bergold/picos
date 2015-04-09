@@ -100,7 +100,10 @@ class PicoManager {
   
   Future<PicoConfig> createNewPicoConfig() {
     return chooseEntry().then((entry) {
-      return new PicoConfig(entry, getNextPort());
+      return new PicoConfig(entry, getAvailablePort());
+    }).then((config) {
+      _picos.add(config);
+      return config;
     });
   }
   
@@ -122,8 +125,12 @@ class PicoManager {
     return fileSystem.chooseEntry(options).then((res) => res.entry);
   }
   
-  getNextPort() {
-    return 5000;
+  getAvailablePort() {
+    var port = 5000;
+    var testPort = (p) => (p.port == port);
+    while (_picos.any(testPort)) port++;
+    return port;
   }
+  
   
 }

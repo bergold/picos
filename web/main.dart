@@ -96,11 +96,6 @@ createPicoFromConfig(config) {
   card.view = view;
   card.onClick.listen((e) => picoListCtrl.select(card));
   picoListCtrl.add(card);
-  
-  view.name = config.name;
-  card.name = config.name;
-  card.port = config.port;
-  config.path.then((p) => card.path = p);
 
   return new Pico(config, card, view);
 }

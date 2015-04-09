@@ -2,6 +2,8 @@ library picos;
 
 import 'dart:async';
 import 'package:chrome/chrome_app.dart';
+import 'package:chrome_net/server.dart' show PicoServer;
+import 'servlet.dart';
 import 'ui/pico.dart';
 
 class Pico {
@@ -10,14 +12,33 @@ class Pico {
   final PicoCard card;
   final PicoView view;
   
-  Pico(this.config, this.card, this.view);
+  List _servlets;
+  PicoServer server;
+  
+  Pico(this.config, this.card, this.view) { init(); }
+  
+  void init() {
+    _servlets = [
+      new FileServlet.fromEntry(config.entry),
+      new IndexServlet.fromEntry(config.entry)
+    ];
+    _servlets.forEach((servlet) => servlet.onRequest.listen(_onRequest));
+  }
   
   start() {
-    
+    return PicoServer.createServer(config.port).then((s) {
+      _servlets.forEach((servlet) => s.addServlet(servlet));
+      return server = s;
+    });
   }
   
   stop() {
-    
+    if (server != null) server.dispose();
+  }
+  
+  _onRequest(requestInfo) {
+    print(requestInfo.request);
+    requestInfo.response.then((response) => print(response));
   }
   
 }

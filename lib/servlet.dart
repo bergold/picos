@@ -22,7 +22,7 @@ class FileServlet extends PicoServlet {
   StreamController _onRequestCtrl = new StreamController.broadcast();
   Stream get onRequest => _onRequestCtrl.stream;
   
-  StaticServlet.fromEntry(this.entry);
+  FileServlet.fromEntry(this.entry);
 
   bool canServe(HttpRequest request) => request.method == 'GET' && !request.uri.path.endsWith('/');
 
@@ -55,7 +55,7 @@ class IndexServlet extends PicoServlet {
   StreamController _onRequestCtrl = new StreamController.broadcast();
   Stream get onRequest => _onRequestCtrl.stream;
   
-  StaticServlet.fromEntry(this.entry);
+  IndexServlet.fromEntry(this.entry);
 
   bool canServe(HttpRequest request) => request.method == 'GET' && request.uri.path.endsWith('/');
 

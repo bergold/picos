@@ -12,6 +12,14 @@ class Pico {
   
   Pico(this.config, this.card, this.view);
   
+  start() {
+    
+  }
+  
+  stop() {
+    
+  }
+  
 }
 
 class PicoConfig {
@@ -60,7 +68,7 @@ class PicoManager {
     });
   }
   
-  void save(Pico pico) {
+  void save(PicoConfig pico) {
     
   }
   void saveAll() => _picos.forEach(save);

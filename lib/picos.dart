@@ -22,7 +22,7 @@ class Pico {
       new FileServlet.fromEntry(config.entry),
       new IndexServlet.fromEntry(config.entry)
     ];
-    _servlets.forEach((servlet) => servlet.onRequest.listen(_onRequest));
+    _servlets.forEach((servlet) => servlet.onRequest.listen((r) => _onRequest(r)));
     
     initUI();
   }

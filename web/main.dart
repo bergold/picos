@@ -99,22 +99,3 @@ createPicoFromConfig(config) {
 
   return new Pico(config, card, view);
 }
-
-/*void triggerChoose() {
-  if (server != null) {
-    server.dispose();
-  }
-  StaticServlet.choose().then((s) {
-    servlet = s;
-    servlet.setLogger(logger);
-    dropdownTrigger.text = servlet.name;
-    return PicoServer.createServer(port);
-  }).then((s) {
-    server = s;
-    server.addServlet(servlet);
-    return server.getInfo();
-  }).then((info) {
-    logger.logStatus("Server running on ${info.localAddress}:${info.localPort.toString()}");
-  });
-}
-*/

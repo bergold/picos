@@ -6,12 +6,10 @@ import 'package:chrome_net/server.dart' show PicoServlet, HttpRequest, HttpRespo
 
 class RequestInfo {
   
-  final Completer completer = new Completer();
-  
   final HttpRequest request;
-  Future<HttpResponse> get response => completer.future;
+  final Future<HttpResponse> response;
   
-  RequestInfo(this.request);
+  RequestInfo(this.request, this.response);
   
 }
 
@@ -28,10 +26,11 @@ class FileServlet extends PicoServlet {
 
   Future<HttpResponse> serve(HttpRequest request) {
     var path = request.uri.path.substring(1);
-
-    var requestInfo = new Requestnfo(request);
+    
+    var responseCompleter = new Completer();
+    var requestInfo = new RequestInfo(request, responseCompleter.future);
     _onRequestCtrl.add(requestInfo);
-
+    
     return entry.getFile(path).then((file) {
       return (file as ChromeFileEntry).readText();
     }).then((text) {
@@ -41,7 +40,7 @@ class FileServlet extends PicoServlet {
       var response = new HttpResponse.notFound();
       return response;
     }).then((response) {
-      requestInfo.completer.complete(response);
+      responseCompleter.complete(response);
       return response;
     });
   }
@@ -62,9 +61,10 @@ class IndexServlet extends PicoServlet {
   Future<HttpResponse> serve(HttpRequest request) {
     var path = request.uri.path.substring(1) + 'index.html';
 
-    var requestInfo = new Requestnfo(request);
+    var responseCompleter = new Completer();
+    var requestInfo = new RequestInfo(request, responseCompleter.future);
     _onRequestCtrl.add(requestInfo);
-
+    
     return entry.getFile(path).then((file) {
       return (file as ChromeFileEntry).readText();
     }).then((text) {
@@ -74,7 +74,7 @@ class IndexServlet extends PicoServlet {
       var response = new HttpResponse.notFound();
       return response;
     }).then((response) {
-      requestInfo.completer.complete(response);
+      responseCompleter.complete(response);
       return response;
     });
   }

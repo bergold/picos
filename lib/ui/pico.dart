@@ -8,9 +8,9 @@ import 'view.dart';
 
 class PicoCard extends ListItemCard with TemplateInjector {
   
-  set name(String v) => injectText('name', v);
-  set path(String v) => injectText('path', v);
-  set port(String v) => injectText('port', v);
+  set name(v) => injectText('name', v);
+  set path(v) => injectText('path', v);
+  set port(v) => injectText('port', v);
   
   StreamController _onClickStartCtrl = new StreamController.broadcast();
   Stream get onClickStart => _onClickStartCtrl.stream;
@@ -23,7 +23,7 @@ class PicoCard extends ListItemCard with TemplateInjector {
 
 class PicoView extends View with TemplateInjector {
   
-  set name(String v) => injectText('name', v);
+  set name(v) => injectText('name', v);
   
   PicoView(TemplateElement tpl) : super(tpl);
   

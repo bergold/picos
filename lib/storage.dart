@@ -11,13 +11,13 @@ class PicoStorage {
   
   getIndex() {
     var key = namespace + '_index';
-    area.get(key).then((result) {
+    return area.get(key).then((result) {
       return result[key] != null ? result[key] : [];
     });
   }
   
   getAll(index) {
-    var keys = index.map((id) => '$namespace_$id');
+    var keys = index.map((id) => '${namespace}_$id');
     return area.get(keys).then((result) => result.values);
   }
   

@@ -1,7 +1,7 @@
 library picos;
 
 import 'dart:async';
-import 'package:chrome/chrome_app.dart';
+import 'package:chrome/chrome_app.dart' as chrome;
 import 'package:chrome_net/server.dart' show PicoServer;
 import 'storage.dart';
 import 'servlet.dart';
@@ -61,7 +61,7 @@ class Pico {
 
 class PicoConfig {
   
-  final DirectoryEntry entry;
+  final chrome.DirectoryEntry entry;
   int port;
   
   PicoConfig(
@@ -75,7 +75,7 @@ class PicoConfig {
     
     var entryId = json['entry'];
     if (entryId == null) throw new ArgumentError('Entry is required');
-    var entryPromise = fileSystem.restoreEntry(entryId);
+    var entryPromise = chrome.fileSystem.restoreEntry(entryId);
     
     return entryPromise.then((entry) => new PicoConfig(entry, port));
   }
@@ -87,9 +87,9 @@ class PicoConfig {
     };
   }
   
-  String get id => fileSystem.retainEntry(entry);
+  String get id => chrome.fileSystem.retainEntry(entry);
   String get name => entry.name;
-  Future<String> get path => fileSystem.getDisplayPath(entry);
+  Future<String> get path => chrome.fileSystem.getDisplayPath(entry);
   
 }
 
@@ -99,7 +99,7 @@ class PicoManager {
   PicoStorage _storage;
   
   PicoManager() {
-    _storage = new PicoStorage(storage.local, 'pico');
+    _storage = new PicoStorage(chrome.storage.local, 'pico');
   }
   
   Future<PicoConfig> createNewPicoConfig() {
@@ -125,12 +125,12 @@ class PicoManager {
     }).then((items) {
       var all = items.map((item) => PicoConfig.fromJson(item));
       return Future.wait(all);
-    })
+    });
   }
   
   chooseEntry() {
-    var options = new ChooseEntryOptions(type: ChooseEntryType.OPEN_DIRECTORY);
-    return fileSystem.chooseEntry(options).then((res) => res.entry);
+    var options = new chrome.ChooseEntryOptions(type: chrome.ChooseEntryType.OPEN_DIRECTORY);
+    return chrome.fileSystem.chooseEntry(options).then((res) => res.entry);
   }
   
   getAvailablePort() {

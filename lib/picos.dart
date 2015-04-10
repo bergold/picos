@@ -107,18 +107,15 @@ class PicoManager {
       return new PicoConfig(entry, getAvailablePort());
     }).then((config) {
       _picos.add(config);
+      save(config);
       return config;
     });
   }
   
-  void save(PicoConfig pico) {
-    
+  Future save(PicoConfig config) {
+    return _storage.setItem(config.id, config.toJson());
   }
-  void saveAll() => _picos.forEach(save);
   
-  Future<PicoConfig> restore(id) {
-    // Todo: read storage pico_{id} and create new picoconfig from json.
-  }
   Future<PicoConfig> restoreAll() {
     return _storage.getIndex().then((index) {
       return _storage.getAll(index);

@@ -97,5 +97,26 @@ createPicoFromConfig(config) {
   card.onClick.listen((e) => picoListCtrl.select(card));
   picoListCtrl.add(card);
 
-  return new Pico(config, card, view);
+  return initPicoUI(new Pico(config, card, view));
+}
+
+initPicoUI(pico) {
+  pico.view.name = pico.config.name;
+  pico.card.name = pico.config.name;
+  pico.card.port = pico.config.port;
+  pico.config.path.then((p) => pico.card.path = p);
+  
+  pico.card.onClickStart.listen((e) {
+    pico.start()
+      .then((s) => s.getInfo())
+      .then((info) => print('Server running on ${info.localAddress}:${info.localPort}'));
+  });
+  pico.card.onClickStop.listen((e) {
+    pico.stop()
+      .then((_) => print('Server disposed.'));
+  });
+  pico.card.onClickOpen.listen((e) {
+    html.window.open('http://127.0.0.1:${pico.config.port}', '_blank');
+  });
+  return pico;
 }

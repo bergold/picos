@@ -24,21 +24,6 @@ class Pico {
       new IndexServlet.fromEntry(config.entry)
     ];
     _servlets.forEach((servlet) => servlet.onRequest.listen((r) => _onRequest(r)));
-    
-    initUI();
-  }
-  
-  void initUI() {
-    view.name = config.name;
-    card.name = config.name;
-    card.port = config.port;
-    config.path.then((p) => card.path = p);
-    
-    card.onClickStart.listen((e) {
-      start()
-        .then((s) => s.getInfo())
-        .then((info) => print('Server running on ${info.localAddress}:${info.localPort}'));
-    });
   }
   
   start() {

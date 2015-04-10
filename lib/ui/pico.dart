@@ -28,11 +28,16 @@ class PicoCard extends ListItemCard with TemplateInjector {
   Stream get onClickDelete => _onClickDeleteCtrl.stream;
   
   PicoCard(TemplateElement tpl) : super(tpl) {
-    template.querySelector('.pico-btn-start').onClick.pipe(_onClickStartCtrl);
-    template.querySelector('.pico-btn-stop').onClick.pipe(_onClickStopCtrl);
-    template.querySelector('.pico-btn-open').onClick.pipe(_onClickOpenCtrl);
-    template.querySelector('.pico-btn-clear').onClick.pipe(_onClickClearCtrl);
-    template.querySelector('.pico-btn-delete').onClick.pipe(_onClickDeleteCtrl);
+    var btnStart = template.querySelector('.pico-btn-start');
+    if (btnStart != null) btnStart.onClick.pipe(_onClickStartCtrl);
+    var btnStop = template.querySelector('.pico-btn-stop');
+    if (btnStop != null) btnStop.onClick.pipe(_onClickStopCtrl);
+    var btnOpen = template.querySelector('.pico-btn-open');
+    if (btnOpen != null) btnOpen.onClick.pipe(_onClickOpenCtrl);
+    var btnClear = template.querySelector('.pico-btn-clear');
+    if (btnClear != null) btnClear.onClick.pipe(_onClickClearCtrl);
+    var btnDelete = template.querySelector('.pico-btn-delete');
+    if (btnDelete != null) btnDelete.onClick.pipe(_onClickDeleteCtrl);
   }
   
 }

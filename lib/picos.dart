@@ -38,8 +38,7 @@ class Pico {
   }
   
   _onRequest(requestInfo) {
-    print(requestInfo.request);
-    requestInfo.response.then((response) => print(response));
+    view.addRequest(requestInfo);
   }
   
 }

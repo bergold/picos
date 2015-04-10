@@ -60,16 +60,16 @@
       </div>
     </template>
 
-    <template id="tplLogItemCard">
+    <template id="tplRequestInfoCard">
       <div class="card card-expandable">
         <div class="list-item pico-clickarea hide-selected">
           <div class="icon"></div>
           <div class="row1">
-            <span class="pico-method"></span>
+            <span class="pico-method" data-inject="request"></span>
             <span class="pico-uri"></span>
           </div>
           <div class="row2">
-            <span class="pico-status">Pending</span>
+            <span class="pico-status" data-inject="response">Pending</span>
             &#x2014; <!-- m-dash -->
             <span class="pico-time"></span>
             &#x2014; <!-- m-dash -->
@@ -97,6 +97,7 @@
           <span data-inject="name"></span>
         </div>
         <span style="display:block;text-align:center;padding-bottom:24px;">No logs available</span>
+        <div class="pico-request-list"></div>
       </section>
     </template>
     

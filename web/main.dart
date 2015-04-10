@@ -15,7 +15,7 @@ var viewContainer;
 // Templates
 var tplPicoItemCard;
 var tplNewPicoItemCard;
-var tplLogItemCard;
+var tplRequestInfoCard;
 
 // View templates
 var viewWelcome;
@@ -35,7 +35,7 @@ void main() {
   
   tplPicoItemCard = html.querySelector('#tplPicoItemCard');
   tplNewPicoItemCard = html.querySelector('#tplNewPicoItemCard');
-  tplLogItemCard = html.querySelector('#tplLogItemCard');
+  tplRequestInfoCard = html.querySelector('#tplRequestInfoCard');
   
   viewWelcome = html.querySelector('#viewWelcome');
   viewNewPico = html.querySelector('#viewNewPico');
@@ -90,6 +90,7 @@ void createNewPico() {
 
 createPicoFromConfig(config) {
   var view = new PicoView(viewPico);
+  view.requestInfoCardTemplate = tplRequestInfoCard;
   viewContainerCtrl.add(view);
   
   var card = new PicoCard(tplPicoItemCard);

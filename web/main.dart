@@ -60,11 +60,11 @@ void initNewPicoBtn() {
 }
 
 void initPicoList() {
-  picoManager.restoreAll()
-    .forEach(createPicoFromConfig)
-    .catchError((e) {
-      print(e);
-    });
+  picoManager.restoreAll().then((all) {
+    all.forEach(createPicoFromConfig);
+  }).catchError((e) {
+    print(e);
+  });
   
   picoListCtrl.onSelect.listen((item) {
     if (item is HasView) {

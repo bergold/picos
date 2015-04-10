@@ -3,6 +3,7 @@ library picos;
 import 'dart:async';
 import 'package:chrome/chrome_app.dart';
 import 'package:chrome_net/server.dart' show PicoServer;
+import 'storage.dart';
 import 'servlet.dart';
 import 'ui/pico.dart';
 
@@ -95,8 +96,11 @@ class PicoConfig {
 class PicoManager {
   
   List<PicoConfig> _picos = [];
+  PicoStorage _storage;
   
-  PicoManager();
+  PicoManager() {
+    _storage = new PicoStorage(storage.local, 'pico');
+  }
   
   Future<PicoConfig> createNewPicoConfig() {
     return chooseEntry().then((entry) {
@@ -115,9 +119,13 @@ class PicoManager {
   Future<PicoConfig> restore(id) {
     // Todo: read storage pico_{id} and create new picoconfig from json.
   }
-  Stream<PicoConfig> restoreAll() {
-    // Todo: read storage pico_index and call restore for each entry.
-    return new Stream.fromIterable(_picos);
+  Future<PicoConfig> restoreAll() {
+    return _storage.getIndex().then((index) {
+      return _storage.getAll(index);
+    }).then((items) {
+      var all = items.map((item) => PicoConfig.fromJson(item));
+      return Future.wait(all);
+    })
   }
   
   chooseEntry() {

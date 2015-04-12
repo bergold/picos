@@ -105,7 +105,12 @@ class PicoManager {
     return _storage.getIndex().then((index) {
       return _storage.getAll(index);
     }).then((items) {
-      var all = items.map((item) => PicoConfig.fromJson(item));
+      var all = items.map((item) {
+        return PicoConfig.fromJson(item).then((config) {
+          _picos.add(config);
+          return config;
+        });
+      });
       return Future.wait(all);
     });
   }

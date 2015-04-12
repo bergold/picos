@@ -34,7 +34,8 @@ class Pico {
   }
   
   stop() {
-    if (server != null) server.dispose();
+    if (server == null) return new Future.value();
+    return server.dispose();
   }
   
   _onRequest(requestInfo) {

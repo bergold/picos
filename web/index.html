@@ -62,20 +62,23 @@
 
     <template id="tplRequestInfoCard">
       <div class="card card-expandable">
-        <div class="list-item list-two-line pico-clickarea hide-selected">
+        <div class="list-item list-two-line pico-clickarea">
           <div class="icon"></div>
-          <div class="row1">
-            <span class="pico-method" data-inject="request"></span>
-            <span class="pico-uri"></span>
+          <div>
+            <div class="row1">
+              <span class="pico-method" data-inject="request"></span>
+              <span class="pico-uri"></span>
+            </div>
+            <div class="row2">
+              <span class="pico-status" data-inject="response">Pending</span>
+              &#x2014; <!-- m-dash -->
+              <span class="pico-time"></span>
+              &#x2014; <!-- m-dash -->
+              <span class="pico-duration"></span>
+            </div>
           </div>
-          <div class="row2">
-            <span class="pico-status" data-inject="response">Pending</span>
-            &#x2014; <!-- m-dash -->
-            <span class="pico-time"></span>
-            &#x2014; <!-- m-dash -->
-            <span class="pico-duration"></span>
-          </div>
-          <div class="icon icon-unfold-more">
+          <div class="icon icon-unfold-more hide-selected">
+          <div class="icon icon-unfold-less show-selected">
           </div>
         </div>
         <div class="show-selected">Expanded</div>

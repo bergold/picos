@@ -22,3 +22,7 @@
   color: rgba(0, 0, 0, 0.54);
 }
 
+.list-item.list-placeholder {
+  justify-content: center;
+  margin-bottom: -48px;
+}

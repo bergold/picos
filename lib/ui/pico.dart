@@ -45,14 +45,18 @@ class PicoCard extends ListItemCard with TemplateInjector {
 class PicoView extends View with TemplateInjector {
   
   TemplateElement requestInfoCardTemplate;
+  HtmlElement _container;
   
   set name(v) => injectText('name', v);
   
-  PicoView(TemplateElement tpl) : super(tpl);
+  PicoView(TemplateElement tpl) : super(tpl) {
+    _container = template.querySelector('.pico-request-list');
+  }
   
   addRequest(requestInfo) {
     var card = new RequestInfoCard(requestInfo, requestInfoCardTemplate);
-    template.querySelector('.pico-request-list').append(card.template).scrollIntoView();
+    _container.append(card.template);
+    card.template.scrollIntoView(ScrollAlignment.TOP);
   }
   
 }

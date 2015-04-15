@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="styles/main.css">
     <link rel="stylesheet" type="text/css" href="styles/theme.css">
     <link rel="stylesheet" type="text/css" href="styles/picoicons.css">
+    <link rel="stylesheet" type="text/css" href="styles/components/button.css">
     <link rel="stylesheet" type="text/css" href="styles/components/card.css">
     <link rel="stylesheet" type="text/css" href="styles/components/list.css">
   </head>
@@ -38,15 +39,23 @@
           <div class="list-item" data-inject="path"></div>
           <div class="list-caption">Port</div>
           <div class="list-item" data-inject="port"></div>
-          <button class="pico-btn-start">
-            <span class="icon icon-play-arrow"></span>
-          </button>
-          <button class="pico-btn-stop">
-            <span class="icon icon-stop"></span>
-          </button>
-          <button class="pico-btn-open">
-            <span class="icon icon-open-in-browser"></span>
-          </button>
+          <div class="button-group">
+            <div class="icon-button pico-btn-start">
+              <span class="icon icon-play-arrow"></span>
+            </div>
+            <div class="icon-button pico-btn-stop">
+              <span class="icon icon-stop"></span>
+            </div>
+            <div class="icon-button pico-btn-open">
+              <span class="icon icon-open-in-browser"></span>
+            </div>
+            <div class="icon-button pico-btn-clear">
+              <span class="icon icon-clear-all"></span>
+            </div>
+            <div class="icon-button pico-btn-delete">
+              <span class="icon icon-delete"></span>
+            </div>
+          </div>
         </div>
       </div>
     </template>

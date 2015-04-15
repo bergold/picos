@@ -91,6 +91,14 @@
 	content: "\e610";
 }
 
+.icon-clock:before {
+	content: "\e61d";
+}
+
+.icon-folder:before {
+	content: "\e61c";
+}
+
 .icon-edit:before {
 	content: "\e611";
 }

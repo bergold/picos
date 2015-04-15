@@ -52,7 +52,7 @@ class PicoView extends View with TemplateInjector {
   
   addRequest(requestInfo) {
     var card = new RequestInfoCard(requestInfo, requestInfoCardTemplate);
-    template.querySelector('.pico-request-list').append(card.template);
+    template.querySelector('.pico-request-list').append(card.template).scrollIntoView();
   }
   
 }

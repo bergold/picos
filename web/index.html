@@ -29,16 +29,27 @@
     <template id="tplPicoItemCard">
       <div class="card card-expandable">
         <div class="list-item pico-clickarea">
-          <div data-inject="name"></div>
+          <div class="text" data-inject="name"></div>
           <div class="icon icon-pico-stopped pico-status"></div>
         </div>
         <div class="show-selected">
-          <div class="list-caption">Name</div>
-          <div class="list-item" data-inject="name"></div>
-          <div class="list-caption">Path</div>
-          <div class="list-item" data-inject="path"></div>
-          <div class="list-caption">Port</div>
-          <div class="list-item" data-inject="port"></div>
+          <div class="list">
+            <div class="list-item list-two-line">
+              <!-- Todo: change icon to icon-folder -->
+              <div class="icon icon-world"></div>
+              <div class="text">
+                <div>Path</div>
+                <div class="secondary" data-inject="path"></div>
+              </div>
+            </div>
+            <div class="list-item list-two-line">
+              <div class="icon icon-port"></div>
+              <div class="text">
+                <div>Port</div>
+                <div class="secondary" data-inject="port"></div>
+              </div>
+            </div>
+          </div>
           <div class="button-group">
             <div class="icon-button pico-btn-start">
               <span class="icon icon-play-arrow"></span>
@@ -64,7 +75,7 @@
       <div class="card">
         <div class="list-item pico-clickarea">
           <div class="icon icon-add"></div>
-          <div>New Pico</div>
+          <div class="text">New Pico</div>
         </div>
       </div>
     </template>
@@ -73,12 +84,12 @@
       <div class="card card-expandable">
         <div class="list-item list-two-line pico-clickarea">
           <div class="icon"></div>
-          <div>
-            <div class="row1">
+          <div class="text">
+            <div>
               <span class="pico-method" data-inject="request"></span>
               <span class="pico-uri"></span>
             </div>
-            <div class="row2">
+            <div class="secondary">
               <span class="pico-status" data-inject="response">Pending</span>
               &#x2014; <!-- m-dash -->
               <span class="pico-time"></span>

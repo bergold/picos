@@ -1,20 +1,29 @@
+.list {
+  margin: 8px 0;
+}
+
 .list-item {
   display: flex;
   height: 48px;
   align-items: center;
+  font-size: 15px;
 }
 
 .list-item.list-two-line {
   height: 72px;
 }
 
-.list-item > div {
+.list-item .text {
   flex: 1;
   margin: 0 16px;
 }
 
+.list-item .secondary {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .list-item .icon {
-  flex: none;
   margin: 0 16px;
   width: 24px;
   height: 24px;

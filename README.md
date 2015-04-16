@@ -1,3 +1,4 @@
-serve
+Picos
 =====
-> Serve a local folder on localhost.
+> Local server for Google Chrome.
+  It serves a folder from the user's filesystem on the localhost.

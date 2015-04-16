@@ -1,0 +1,37 @@
+.list {
+  margin: 8px 0;
+}
+
+.list-item {
+  display: flex;
+  height: 48px;
+  align-items: center;
+  font-size: 15px;
+}
+
+.list-item.list-two-line {
+  height: 72px;
+}
+
+.list-item .text {
+  flex: 1;
+  margin: 0 16px;
+}
+
+.list-item .secondary {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.list-item .icon {
+  margin: 0 16px;
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.list-item.list-placeholder {
+  justify-content: center;
+  margin-bottom: -48px;
+}

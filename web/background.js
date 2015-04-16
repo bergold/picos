@@ -1,5 +1,5 @@
 
-chrome.app.runtime.onLaunched.addListener(function(launchData) {
+function createWindow() {
   chrome.app.window.create(
     'index.html',
     {
@@ -11,10 +11,21 @@ chrome.app.runtime.onLaunched.addListener(function(launchData) {
       },
       frame: {
         type: 'chrome',
-        color: '#1976D2',
-        activeColor: '#1976D2',
-        inactiveColor: '#1976D2'
+        color: '#BDBDBD'
       }
+    },
+    function(appWindow) {
+      appWindow.onClosed.addListener(closeSockets);
     }
   );
-});
+}
+
+function closeSockets() {
+  chrome.sockets.tcpServer.getSockets(function(sockets) {
+    sockets.forEach(function(socket) {
+      chrome.sockets.tcpServer.close(socket.socketId);
+    });
+  });
+}
+
+chrome.app.runtime.onLaunched.addListener(createWindow);

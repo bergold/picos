@@ -1,55 +1,125 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <title>Picos</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <link rel="stylesheet" type="text/css" href="styles/theme.css">
+    <link rel="stylesheet" type="text/css" href="styles/picoicons.css">
+    <link rel="stylesheet" type="text/css" href="styles/components/button.css">
+    <link rel="stylesheet" type="text/css" href="styles/components/card.css">
+    <link rel="stylesheet" type="text/css" href="styles/components/list.css">
   </head>
 
   <body>
 
-    <div id="container">
-      <header>
-        <div class="dropdown">
-          <div id="dropdownTrigger" class="dropdown-value">Select folder</div>
-          <div id="dropdownMenu" class="dropdown-menu" hidden>
-            <div id="dropdownEntryLoading" class="menu-entry" disabled hidden>Loading recent folders...</div>
-            <div id="dropdownEntryEmpty" class="menu-entry" disabled>No recent folders</div>
-            <div class="menu-divider"></div>
-            <div id="dropdownEntryChoose" class="menu-entry">Select folder...</div>
-          </div>
-        </div>
-      </header>
-      <section id="loggerContainer"></section>
+    <div class="container">
+
+      <aside id="picoList">
+      </aside>
+
+      <main id="viewContainer">
+      </main>
+
     </div>
 
-    <template id="tplDialog">
-      <div class="dialog-backdrop">
-        <div class="dialog-content">
+
+    <!-- Templates -->
+    
+    <template id="tplPicoItemCard">
+      <div class="card card-expandable">
+        <div class="list-item pico-clickarea">
+          <div class="text" data-inject="name"></div>
+          <div class="icon icon-pico-stopped pico-status"></div>
+        </div>
+        <div class="show-selected">
+          <div class="list">
+            <div class="list-item list-two-line">
+              <div class="icon icon-folder"></div>
+              <div class="text">
+                <div>Path</div>
+                <div class="secondary" data-inject="path"></div>
+              </div>
+            </div>
+            <div class="list-item list-two-line">
+              <div class="icon icon-port"></div>
+              <div class="text">
+                <div>Port</div>
+                <div class="secondary" data-inject="port"></div>
+              </div>
+            </div>
+          </div>
+          <div class="button-group">
+            <div class="icon-button pico-btn-start" title="Start Pico">
+              <span class="icon icon-play-arrow"></span>
+            </div>
+            <div class="icon-button pico-btn-stop" title="Stop Pico">
+              <span class="icon icon-stop"></span>
+            </div>
+            <div class="icon-button pico-btn-open" title="Open in browser">
+              <span class="icon icon-open-in-browser"></span>
+            </div>
+            <div class="icon-button pico-btn-clear" title="Clear requests">
+              <span class="icon icon-clear-all"></span>
+            </div>
+            <div class="icon-button pico-btn-delete" title="Delete Pico">
+              <span class="icon icon-delete"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+    
+    <template id="tplNewPicoItemCard">
+      <div class="card">
+        <div class="list-item pico-clickarea">
+          <div class="icon icon-add"></div>
+          <div class="text">New Pico</div>
         </div>
       </div>
     </template>
 
-    <template id="tplListIten">
-      <div class="list-item">
-        <div class="icon"></div>
-        <div class="row1">
-          <span data-bind-property="textContent" data-bind-value="method"></span>
-          <span data-bind-property="textContent" data-bind-value="uri"></span>
+    <template id="tplRequestInfoCard">
+      <div class="card card-expandable">
+        <div class="list-item list-two-line pico-clickarea">
+          <div class="icon"></div>
+          <div class="text">
+            <div>
+              <span class="pico-method" data-inject="request"></span>
+              <span class="pico-uri"></span>
+            </div>
+            <div class="secondary">
+              <span class="pico-status" data-inject="response">Pending</span>
+              &#x2014; <!-- m-dash -->
+              <span class="pico-time"></span>
+              &#x2014; <!-- m-dash -->
+              <span class="pico-duration"></span>
+            </div>
+          </div>
+          <div class="icon icon-unfold-more hide-selected"></div>
+          <div class="icon icon-unfold-less show-selected"></div>
         </div>
-        <div class="row2">
-          <span data-bind-property="textContent" data-bind-value="status">Pending</span>
-          &#x2014; <!-- m-dash -->
-          <span data-bind-property="textContent" data-bind-value="time"></span>
-          &#x2014; <!-- m-dash -->
-          <span data-bind-property="textContent" data-bind-value="duration"></span>
-        </div>
-        <div class="action">
-          <span class="icon icon-expand"></span>
-        </div>
+        <div class="show-selected">Expanded</div>
       </div>
     </template>
-
+    
+    
+    <!-- Views -->
+    
+    <template id="viewWelcome">
+      <section class="card" hidden>
+        <span style="display:block;text-align:center;font-size:3em;padding:24px;">Welcome</span>
+      </section>
+    </template>
+    
+    <template id="viewPico">
+      <section class="" hidden>
+        <div class="pico-request-list">
+          <div class="list-item list-placeholder">Requests will be displayed here.</div>
+        </div>
+      </section>
+    </template>
+    
     <script src="packages/chrome/bootstrap.js" defer></script>
     <script src="main.dart" type="application/dart"></script>
   </body>

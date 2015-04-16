@@ -1,0 +1,38 @@
+.card {
+  position: relative;
+  box-sizing: border-box;
+  background-color: #FFFFFF;
+  transition: margin .1s ease-out;
+}
+.card::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  content: '';
+  display: block;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  pointer-events: none;
+  transition: box-shadow .1s ease-out;
+}
+
+.card-expandable {
+  will-change: margin;
+}
+.card-expandable.selected {
+  margin: 16px -8px;
+}
+.card-expandable.selected::before {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.card .show-selected,
+.card.selected .hide-selected {
+  display: none;
+}
+.card.selected .show-selected,
+.card .hide-selected {
+  display: block;
+}
+

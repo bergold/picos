@@ -1,94 +1,123 @@
+
 import 'dart:html' as html;
+import 'package:picos/picos.dart';
+import 'package:picos/ui/pico.dart';
+import 'package:picos/ui/list.dart';
+import 'package:picos/ui/card.dart';
+import 'package:picos/ui/view.dart';
 
-import 'package:chrome_net/server.dart' show PicoServer, ServerLogger, HttpRequest, HttpResponse;
+var picoManager;
 
-import 'static_servlet.dart';
+// UI Elements
+var picoList;
+var viewContainer;
 
-var port = 5000;
-var server;
-var logger;
-var servlet;
+// Templates
+var tplPicoItemCard;
+var tplNewPicoItemCard;
+var tplRequestInfoCard;
 
-// UI elements
-var body;
-var dropdownTrigger;
-var dropdownMenu;
-var dropdownEntryLoading;
-var dropdownEntryEmpty;
-var dropdownEntryChoose;
-var loggerContainer;
+// View templates
+var viewWelcome;
+var viewNewPico;
+var viewPico;
+
+// Controllers
+var picoListCtrl;
+var viewContainerCtrl;
 
 void main() {
-  body = html.document.body;
-  dropdownTrigger = html.querySelector('#dropdownTrigger');
-  dropdownMenu = html.querySelector('#dropdownMenu');
-  dropdownEntryLoading = html.querySelector('#dropdownEntryLoading');
-  dropdownEntryEmpty = html.querySelector('#dropdownEntryEmpty');
-  dropdownEntryChoose = html.querySelector('#dropdownEntryChoose');
-  loggerContainer = html.querySelector('#loggerContainer');
-
-  body.onClick.listen((e) {
-    dropdownMenu.attributes['hidden'] = '';
-  });
-  dropdownMenu.onClick.listen((e) => e.stopPropagation());
-
-  dropdownTrigger.onClick.listen((e) {
-    e.stopPropagation();
-    dropdownMenu.attributes.remove('hidden');
-  });
-
-  dropdownEntryChoose.onClick.listen((e) {
-    dropdownMenu.attributes['hidden'] = '';
-    triggerChoose();
-  });
-
-  logger = new ElementServletLogger(loggerContainer);
+  
+  picoManager = new PicoManager();
+  
+  picoList = html.querySelector('#picoList');
+  viewContainer = html.querySelector('#viewContainer');
+  
+  tplPicoItemCard = html.querySelector('#tplPicoItemCard');
+  tplNewPicoItemCard = html.querySelector('#tplNewPicoItemCard');
+  tplRequestInfoCard = html.querySelector('#tplRequestInfoCard');
+  
+  viewWelcome = html.querySelector('#viewWelcome');
+  viewNewPico = html.querySelector('#viewNewPico');
+  viewPico = html.querySelector('#viewPico');
+  
+  picoListCtrl = new ListComponent(picoList);
+  viewContainerCtrl = new ListComponent(viewContainer);
+  
+  viewContainerCtrl.add(new View(viewWelcome), true);
+  
+  initNewPicoBtn();
+  initPicoList();
+  
 }
 
-void triggerChoose() {
-  if (server != null) {
-    server.dispose();
-  }
-  StaticServlet.choose().then((s) {
-    servlet = s;
-    servlet.setLogger(logger);
-    dropdownTrigger.text = servlet.name;
-    return PicoServer.createServer(port);
-  }).then((s) {
-    server = s;
-    server.addServlet(servlet);
-    return server.getInfo();
-  }).then((info) {
-    logger.logStatus("Server running on ${info.localAddress}:${info.localPort.toString()}");
+void initNewPicoBtn() {
+  var newPicoBtn = new ListItemCard(tplNewPicoItemCard);
+  newPicoBtn.onClick.listen((e) => picoListCtrl.select(newPicoBtn));
+  newPicoBtn.onClick.listen((e) => createNewPico());
+  picoListCtrl.add(newPicoBtn);
+  picoListCtrl.insertBefore = newPicoBtn;
+}
+
+void initPicoList() {
+  picoManager.restoreAll().then((all) {
+    all.forEach(createPicoFromConfig);
+  }).catchError((e) {
+    print(e);
+  });
+  
+  picoListCtrl.onSelect.listen((item) {
+    if (item is HasView) {
+      if (item.view != null) {
+        viewContainerCtrl.select(item.view);
+      } else {
+        viewContainerCtrl.deselect();
+      }
+    }
   });
 }
 
-class PrintServletLogger extends ServletLogger {
-  void logStart(int id, HttpRequest request) => print('[$id] > $request');
-  void logComplete(int id, HttpResponse response) => print('[$id] < $response');
-  void logError(int id, error) => print('[$id] ! $error');
+/// Triggers the creation of a new Pico.
+/// Gets triggered by the newPicoBtn.onClick handler.
+void createNewPico() {
+  picoManager.createNewPicoConfig()
+    .then(createPicoFromConfig)
+    .then((p) => picoListCtrl.select(p.card))
+    .catchError((e) {
+      print(e);
+    });
 }
 
-class ElementServletLogger extends ServletLogger {
+createPicoFromConfig(config) {
+  var view = new PicoView(viewPico);
+  view.requestInfoCardTemplate = tplRequestInfoCard;
+  viewContainerCtrl.add(view);
+  
+  var card = new PicoCard(tplPicoItemCard);
+  card.view = view;
+  card.onClick.listen((e) => picoListCtrl.select(card));
+  picoListCtrl.add(card);
 
-  final html.HtmlElement _container;
+  return initPicoUI(new Pico(config, card, view));
+}
 
-  ElementServletLogger(this._container);
-
-  void logStart(int id, HttpRequest request) => _parse({ 'id': id, 'icon': '>', 'msg': request });
-  void logComplete(int id, HttpResponse response) => _parse({ 'id': id, 'icon': '<', 'msg': response });
-  void logError(int id, error) => _parse({ 'id': id, 'icon': '!', 'msg': error });
-  void logStatus(String msg) => _parse({ 'id': 'info', 'icon': '#', 'msg': msg });
-
-  void _parse(Map data) {
-    var text = '[${data['id']}] ${data['icon']} ${data['msg']}';
-    var div = new html.DivElement();
-    div.text = text;
-    _append(div);
-  }
-
-  void _append(html.HtmlElement element) {
-    _container.append(element);
-    _container.scrollTop = _container.scrollHeight - _container.clientHeight;
-  }
+initPicoUI(pico) {
+  pico.view.name = pico.config.name;
+  pico.card.name = pico.config.name;
+  pico.card.port = pico.config.port;
+  pico.config.path.then((p) => pico.card.path = p);
+  
+  pico.card.onClickStart.listen((e) {
+    pico.start()
+      .then((s) => s.getInfo())
+      .then((info) => print('Server running on ${info.localAddress}:${info.localPort}'));
+  });
+  pico.card.onClickStop.listen((e) {
+    pico.stop()
+      .then((_) => print('Server disposed.'));
+  });
+  pico.card.onClickOpen.listen((e) {
+    html.window.open('http://127.0.0.1:${pico.config.port}', '_blank');
+  });
+  return pico;
 }

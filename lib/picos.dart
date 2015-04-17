@@ -101,6 +101,10 @@ class PicoManager {
     return _storage.setItem(config.id, config.toJson());
   }
   
+  Future remove(PicoConfig config) {
+    return _storage.removeItem(config.id);
+  }
+  
   Future<PicoConfig> restoreAll() {
     return _storage.getIndex().then((index) {
       return _storage.getAll(index);
@@ -126,6 +130,5 @@ class PicoManager {
     while (_picos.any(testPort)) port++;
     return port;
   }
-  
   
 }

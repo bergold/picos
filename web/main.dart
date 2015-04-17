@@ -119,5 +119,13 @@ initPicoUI(pico) {
   pico.card.onClickOpen.listen((e) {
     html.window.open('http://127.0.0.1:${pico.config.port}', '_blank');
   });
+  pico.card.onClickDelete.listen((e) {
+    pico.stop()
+      .then((_) => print('Server disposed.'));
+    viewContainerCtrl.remove(pico.view);
+    picoListCtrl.remove(pico.card);
+    picoManager.remove(pico.config)
+      .then((_) => print('Server removed.'));
+  });
   return pico;
 }

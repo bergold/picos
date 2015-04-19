@@ -2,6 +2,7 @@ library picos.ui.pico;
 
 import 'dart:html';
 import 'dart:async';
+import 'package:chrome_net/server.dart' show HttpStatus;
 import 'template.dart';
 import 'card.dart';
 import 'view.dart';
@@ -65,14 +66,27 @@ class RequestInfoCard extends Card with TemplateInjector {
   
   final requestInfo;
   
-  set request(v) => injectText('request', v);
-  set response(v) => injectText('response', v);
+  set method(v) => injectText('method', v);
+  set uri(v) => injectText('uri', v);
+  set status(v) => injectText('status', v);
+  set duration(v) => injectText('duration', v);
+  set time(v) => injectText('time', v);
   
   RequestInfoCard(this.requestInfo, TemplateElement tpl) : super(tpl) {
-    request = requestInfo.request;
+    method = requestInfo.request.method;
+    uri = requestInfo.request.uri;
+    
     requestInfo.response.then((res) {
-      response = res;
+      status = '${res.statusCode} ${_calcPhrase(res)}';
     });
+  }
+  
+  String _calcPhrase(res) {
+    if (res.reasonPhrase == null) {
+      return HttpStatus.getReasonPhrase(res.statusCode);
+    } else {
+      return res.reasonPhrase;
+    }
   }
   
 }

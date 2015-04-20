@@ -66,6 +66,8 @@ class RequestInfoCard extends Card with TemplateInjector {
   
   final requestInfo;
   
+  DateTime _start;
+  
   set method(v) => injectText('method', v);
   set uri(v) => injectText('uri', v);
   set status(v) => injectText('status', v);
@@ -73,10 +75,16 @@ class RequestInfoCard extends Card with TemplateInjector {
   set time(v) => injectText('time', v);
   
   RequestInfoCard(this.requestInfo, TemplateElement tpl) : super(tpl) {
+    _start = new DateTime.now();
+    
     method = requestInfo.request.method;
     uri = requestInfo.request.uri;
+    time = _start;
     
     requestInfo.response.then((res) {
+      var dur = new DateTime.now().difference(_start);
+      
+      duration = '${dur.inMilliseconds}ms';
       status = '${res.statusCode} ${_calcPhrase(res)}';
     });
   }

@@ -18,7 +18,11 @@ abstract class TemplateInjector {
   HtmlElement get template;
   
   injectText(key, value) {
-    template.querySelectorAll('[data-inject=${key}]').forEach((e) => e.text = value.toString());
+    template.querySelectorAll('[data-inject=$key]').forEach((e) => e.text = value.toString());
+  }
+  
+  injectClass(key, value) {
+    template.querySelectorAll('[data-inject=$key]').forEach((e) => e.classes.add(value.toString()));
   }
   
 }

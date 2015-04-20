@@ -73,6 +73,7 @@ class RequestInfoCard extends Card with TemplateInjector {
   set status(v) => injectText('status', v);
   set duration(v) => injectText('duration', v);
   set time(v) => injectText('time', v);
+  set icon(v) => injectClass('icon', v);
   
   RequestInfoCard(this.requestInfo, TemplateElement tpl) : super(tpl) {
     _start = new DateTime.now();
@@ -83,9 +84,11 @@ class RequestInfoCard extends Card with TemplateInjector {
     
     requestInfo.response.then((res) {
       var dur = new DateTime.now().difference(_start);
+      var ico = _calcIcon(res.statusCode);
       
       duration = '${dur.inMilliseconds}ms';
       status = '${res.statusCode} ${_calcPhrase(res)}';
+      if (ico != null) icon = 'icon-$ico';
     });
   }
   
@@ -95,6 +98,14 @@ class RequestInfoCard extends Card with TemplateInjector {
     } else {
       return res.reasonPhrase;
     }
+  }
+  
+  String _calcIcon(statusCode) {
+    if (statusCode >= 500 && statusCode < 600) return 'error';
+    if (statusCode >= 400 && statusCode < 500) return 'warning';
+    if ((statusCode >= 300 && statusCode < 400) ||
+        (statusCode >= 100 && statusCode < 200)) return 'info';
+    return null;
   }
   
 }

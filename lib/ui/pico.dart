@@ -25,6 +25,9 @@ class PicoCard extends ListItemCard with TemplateInjector {
   StreamController _onClickClearCtrl = new StreamController.broadcast();
   Stream get onClickClear => _onClickClearCtrl.stream;
   
+  StreamController _onClickEditCtrl = new StreamController.broadcast();
+  Stream get onClickEdit => _onClickEditCtrl.stream;
+  
   StreamController _onClickDeleteCtrl = new StreamController.broadcast();
   Stream get onClickDelete => _onClickDeleteCtrl.stream;
   
@@ -37,6 +40,8 @@ class PicoCard extends ListItemCard with TemplateInjector {
     if (btnOpen != null) btnOpen.onClick.pipe(_onClickOpenCtrl);
     var btnClear = template.querySelector('.pico-btn-clear');
     if (btnClear != null) btnClear.onClick.pipe(_onClickClearCtrl);
+    var btnEdit = template.querySelector('.pico-btn-edit');
+    if (btnEdit != null) btnEdit.onClick.pipe(_onClickEditCtrl);
     var btnDelete = template.querySelector('.pico-btn-delete');
     if (btnDelete != null) btnDelete.onClick.pipe(_onClickDeleteCtrl);
   }

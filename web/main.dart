@@ -116,7 +116,10 @@ initPicoUI(pico) {
   });
   pico.card.onClickStop.listen((e) {
     pico.stop()
-      .then((_) => print('Server disposed.'));
+      .then((_) {
+        pico.view.state = 'notrunning';
+        print('Server disposed.');
+      });
   });
   pico.card.onClickOpen.listen((e) {
     html.window.open('http://127.0.0.1:${pico.config.port}', '_blank');

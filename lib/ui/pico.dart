@@ -9,9 +9,9 @@ import 'view.dart';
 
 class PicoCard extends ListItemCard with TemplateInjector {
   
-  set name(v) => injectText('name', v);
-  set path(v) => injectText('path', v);
-  set port(v) => injectText('port', v);
+  set name(v) => inject('name', v);
+  set path(v) => inject('path', v);
+  set port(v) => inject('port', v);
   
   StreamController _onClickStartCtrl = new StreamController.broadcast();
   Stream get onClickStart => _onClickStartCtrl.stream;
@@ -53,7 +53,7 @@ class PicoView extends View with TemplateInjector {
   TemplateElement requestInfoCardTemplate;
   HtmlElement _container;
   
-  set name(v) => injectText('name', v);
+  set name(v) => inject('name', v);
   
   PicoView(TemplateElement tpl) : super(tpl) {
     _container = template.querySelector('.pico-request-list');
@@ -73,12 +73,12 @@ class RequestInfoCard extends Card with TemplateInjector {
   
   DateTime _start;
   
-  set method(v) => injectText('method', v);
-  set uri(v) => injectText('uri', v);
-  set status(v) => injectText('status', v);
-  set duration(v) => injectText('duration', v);
-  set time(v) => injectText('time', v);
-  set icon(v) => injectClass('icon', v);
+  set method(v) => inject('method', v);
+  set uri(v) => inject('uri', v);
+  set status(v) => inject('status', v);
+  set duration(v) => inject('duration', v);
+  set time(v) => inject('time', v);
+  set icon(v) => inject('icon', v);
   
   RequestInfoCard(this.requestInfo, TemplateElement tpl) : super(tpl) {
     _start = new DateTime.now();

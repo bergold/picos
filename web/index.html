@@ -116,8 +116,11 @@
     </template>
     
     <template id="viewPico">
-      <section class="" hidden>
-        <div class="pico-request-list">
+      <section hidden>
+        <div class="card" data-inject="stateNotrunningHidden" data-inject-type="hidden" hidden>
+          Server is not running.
+        </div>
+        <div class="pico-request-list" data-inject="stateRunningHidden" data-inject-type="hidden" hidden>
           <div class="list-item list-placeholder">Requests will be displayed here.</div>
         </div>
       </section>

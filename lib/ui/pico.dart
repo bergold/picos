@@ -53,10 +53,17 @@ class PicoView extends View with TemplateInjector {
   TemplateElement requestInfoCardTemplate;
   HtmlElement _container;
   
-  set name(v) => inject('name', v);
+  set state(v) {
+    if (v != 'notrunning') inject('stateNotrunningHidden', true);
+    else inject('stateNotrunningHidden', false);
+    
+    if (v != 'running') inject('stateRunningHidden', true);
+    else inject('stateRunningHidden', false);
+  }
   
   PicoView(TemplateElement tpl) : super(tpl) {
     _container = template.querySelector('.pico-request-list');
+    state = 'notrunning';
   }
   
   addRequest(requestInfo) {

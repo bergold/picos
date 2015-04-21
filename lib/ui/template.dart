@@ -47,9 +47,10 @@ abstract class TemplateInjector {
   _injectAttribute(element, attribute, value) {
     if (value == null || (value is bool && value == false)) {
       element.attributes.remove(attribute);
+    } else {
+      var textValue = (value is bool && value == true) ? '' : value.toString();
+      element.attributes[attribute] = textValue;
     }
-    var textValue = (value is bool && value == true) ? '' : value.toString();
-    element.attributes[attribute] = textValue;
   }
   
 }

@@ -102,7 +102,6 @@ createPicoFromConfig(config) {
 }
 
 initPicoUI(pico) {
-  pico.view.name = pico.config.name;
   pico.card.name = pico.config.name;
   pico.card.port = pico.config.port;
   pico.config.path.then((p) => pico.card.path = p);
@@ -110,7 +109,10 @@ initPicoUI(pico) {
   pico.card.onClickStart.listen((e) {
     pico.start()
       .then((s) => s.getInfo())
-      .then((info) => print('Server running on ${info.localAddress}:${info.localPort}'));
+      .then((info) {
+        pico.view.state = 'running';
+        print('Server running on ${info.localAddress}:${info.localPort}');
+      });
   });
   pico.card.onClickStop.listen((e) {
     pico.stop()
@@ -121,7 +123,10 @@ initPicoUI(pico) {
   });
   pico.card.onClickDelete.listen((e) {
     pico.stop()
-      .then((_) => print('Server disposed.'));
+      .then((_) {
+        pico.view.state = 'notrunning';
+        print('Server disposed.');
+      });
     viewContainerCtrl.remove(pico.view);
     picoListCtrl.remove(pico.card);
     picoManager.remove(pico.config)

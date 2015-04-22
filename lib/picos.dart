@@ -16,6 +16,12 @@ class Pico {
   List _servlets;
   PicoServer server;
   
+  StreamController _onStartedCtrl = new StreamController.broadcast();
+  Stream get onStarted => _onStartedCtrl.stream;
+  
+  StreamController _onStoppedCtrl = new StreamController.broadcast();
+  Stream get onStopped => _onStoppedCtrl.stream;
+  
   Pico(this.config, this.card, this.view) { init(); }
   
   void init() {
@@ -24,18 +30,27 @@ class Pico {
       new IndexServlet.fromEntry(config.entry)
     ];
     _servlets.forEach((servlet) => servlet.onRequest.listen((r) => _onRequest(r)));
+    
+    initUI();
   }
   
-  start() {
-    return PicoServer.createServer(config.port).then((s) {
+  void initUI() {
+    card
+      ..onClickStart.listen(start)
+      ..onClickStop.listen(stop);
+  }
+  
+  start(_) {
+    PicoServer.createServer(config.port).then((s) {
       _servlets.forEach((servlet) => s.addServlet(servlet));
-      return server = s;
+      server = s;
+      
+      server.getInfo().then(_onStartedCtrl.add);
     });
   }
   
-  stop() {
-    if (server == null) return new Future.value();
-    return server.dispose();
+  stop(_) {
+    ((server == null) ? new Future.value() : server.dispose()).then(_onStoppedCtrl.add);
   }
   
   _onRequest(requestInfo) {

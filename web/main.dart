@@ -106,30 +106,22 @@ initPicoUI(pico) {
   pico.card.port = pico.config.port;
   pico.config.path.then((p) => pico.card.path = p);
   
-  pico.card.onClickStart.listen((e) {
-    pico.start()
-      .then((s) => s.getInfo())
-      .then((info) {
-        pico.view.state = 'running';
-        print('Server running on ${info.localAddress}:${info.localPort}');
-      });
+  pico.onStarted.listen((info) {
+    pico.view.state = 'running';
+    print('Server running on ${info.localAddress}:${info.localPort}');
   });
-  pico.card.onClickStop.listen((e) {
-    pico.stop()
-      .then((_) {
-        pico.view.state = 'notrunning';
-        print('Server disposed.');
-      });
+  
+  pico.onStopped.listen((_) {
+    pico.view.state = 'notrunning';
+    print('Server disposed.');
   });
+  
   pico.card.onClickOpen.listen((e) {
     html.window.open('http://127.0.0.1:${pico.config.port}', '_blank');
   });
+  
   pico.card.onClickDelete.listen((e) {
-    pico.stop()
-      .then((_) {
-        pico.view.state = 'notrunning';
-        print('Server disposed.');
-      });
+    pico.stop();
     viewContainerCtrl.remove(pico.view);
     picoListCtrl.remove(pico.card);
     picoManager.remove(pico.config)

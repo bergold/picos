@@ -79,6 +79,7 @@ class PicoView extends View with TemplateInjector {
   
   TemplateElement requestInfoCardTemplate;
   HtmlElement _container;
+  List<HtmlElement> _requests;
   
   set state(int v) {
     switch (v) {
@@ -104,12 +105,18 @@ class PicoView extends View with TemplateInjector {
   
   PicoView(TemplateElement tpl) : super(tpl) {
     _container = template.querySelector('.pico-request-list');
+    _requests = new List();
   }
   
   addRequest(requestInfo) {
     var card = new RequestInfoCard(requestInfo, requestInfoCardTemplate);
     _container.append(card.template);
+    _requests.add(card.template);
     card.template.scrollIntoView(ScrollAlignment.TOP);
+  }
+  
+  clear([_]) {
+    _requests.forEach((r) => r.remove());
   }
   
 }

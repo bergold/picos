@@ -41,7 +41,8 @@ class Pico {
   void initUI() {
     card
       ..onClickStart.listen(start)
-      ..onClickStop.listen(stop);
+      ..onClickStop.listen(stop)
+      ..onClickClear.listen(view.clear);
       
     onStarted.listen((_) {
       state = stateRunning;
@@ -66,6 +67,7 @@ class Pico {
   
   stop([_]) {
     state = stateSwitching;
+    view.clear();
     
     if (server == null) return;
     server.dispose().then(_onStoppedCtrl.add);

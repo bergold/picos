@@ -20,6 +20,8 @@ class PicoCard extends ListItemCard with TemplateInjector {
         inject('stateNotRunningHidden', false);
         inject('stateSwitchingHidden', true);
         inject('stateRunningHidden', true);
+        
+        inject('stateIcon', 'icon-pico-stopped');
         break;
         
       case Pico.stateSwitching:
@@ -32,6 +34,8 @@ class PicoCard extends ListItemCard with TemplateInjector {
         inject('stateRunningHidden', false);
         inject('stateNotRunningHidden', true);
         inject('stateSwitchingHidden', true);
+        
+        inject('stateIcon', 'icon-pico-running');
         break;
     }
   }

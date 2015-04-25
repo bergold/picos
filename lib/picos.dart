@@ -53,7 +53,7 @@ class Pico {
     state = stateNotRunning;
   }
   
-  start(_) {
+  start([_]) {
     state = stateSwitching;
     
     PicoServer.createServer(config.port).then((s) {
@@ -64,7 +64,7 @@ class Pico {
     });
   }
   
-  stop(_) {
+  stop([_]) {
     state = stateSwitching;
     
     if (server == null) return;

@@ -107,12 +107,10 @@ initPicoUI(pico) {
   pico.config.path.then((p) => pico.card.path = p);
   
   pico.onStarted.listen((info) {
-    pico.view.state = 'running';
     print('Server running on ${info.localAddress}:${info.localPort}');
   });
   
   pico.onStopped.listen((_) {
-    pico.view.state = 'notrunning';
     print('Server disposed.');
   });
   

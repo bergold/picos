@@ -3,6 +3,7 @@ library picos.ui.pico;
 import 'dart:html';
 import 'dart:async';
 import 'package:chrome_net/server.dart' show HttpStatus;
+import '../picos.dart' show Pico;
 import 'template.dart';
 import 'card.dart';
 import 'view.dart';
@@ -12,6 +13,28 @@ class PicoCard extends ListItemCard with TemplateInjector {
   set name(v) => inject('name', v);
   set path(v) => inject('path', v);
   set port(v) => inject('port', v);
+  
+  set state(int v) {
+    switch (v) {
+      case Pico.stateNotRunning:
+        inject('stateNotRunningHidden', false);
+        inject('stateSwitchingHidden', true);
+        inject('stateRunningHidden', true);
+        break;
+        
+      case Pico.stateSwitching:
+        inject('stateSwitchingHidden', false);
+        inject('stateNotRunningHidden', true);
+        inject('stateRunningHidden', true);
+        break;
+        
+      case Pico.stateRunning:
+        inject('stateRunningHidden', false);
+        inject('stateNotRunningHidden', true);
+        inject('stateSwitchingHidden', true);
+        break;
+    }
+  }
   
   StreamController _onClickStartCtrl = new StreamController.broadcast();
   Stream get onClickStart => _onClickStartCtrl.stream;
@@ -53,17 +76,30 @@ class PicoView extends View with TemplateInjector {
   TemplateElement requestInfoCardTemplate;
   HtmlElement _container;
   
-  set state(v) {
-    if (v != 'notrunning') inject('stateNotrunningHidden', true);
-    else inject('stateNotrunningHidden', false);
-    
-    if (v != 'running') inject('stateRunningHidden', true);
-    else inject('stateRunningHidden', false);
+  set state(int v) {
+    switch (v) {
+      case Pico.stateNotRunning:
+        inject('stateNotRunningHidden', false);
+        inject('stateSwitchingHidden', true);
+        inject('stateRunningHidden', true);
+        break;
+        
+      case Pico.stateSwitching:
+        inject('stateSwitchingHidden', false);
+        inject('stateNotRunningHidden', true);
+        inject('stateRunningHidden', true);
+        break;
+        
+      case Pico.stateRunning:
+        inject('stateRunningHidden', false);
+        inject('stateNotRunningHidden', true);
+        inject('stateSwitchingHidden', true);
+        break;
+    }
   }
   
   PicoView(TemplateElement tpl) : super(tpl) {
     _container = template.querySelector('.pico-request-list');
-    state = 'notrunning';
   }
   
   addRequest(requestInfo) {

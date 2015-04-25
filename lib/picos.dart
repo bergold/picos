@@ -9,6 +9,10 @@ import 'ui/pico.dart';
 
 class Pico {
   
+  static const int stateNotRunning = 0;
+  static const int stateSwitching = 1;
+  static const int stateRunning = 2;
+  
   final PicoConfig config;
   final PicoCard card;
   final PicoView view;
@@ -38,9 +42,20 @@ class Pico {
     card
       ..onClickStart.listen(start)
       ..onClickStop.listen(stop);
+      
+    onStarted.listen((_) {
+      state = stateRunning;
+    });
+    onStopped.listen((_) {
+      state = stateNotRunning;
+    });
+      
+    state = stateNotRunning;
   }
   
   start(_) {
+    state = stateSwitching;
+    
     PicoServer.createServer(config.port).then((s) {
       _servlets.forEach((servlet) => s.addServlet(servlet));
       server = s;
@@ -50,7 +65,21 @@ class Pico {
   }
   
   stop(_) {
-    ((server == null) ? new Future.value() : server.dispose()).then(_onStoppedCtrl.add);
+    state = stateSwitching;
+    
+    if (server == null) return;
+    server.dispose().then(_onStoppedCtrl.add);
+    server == null;
+  }
+  
+  set state(int v) {
+    if (
+      (v != stateNotRunning) &&
+      (v != stateSwitching) &&
+      (v != stateRunning)
+    ) throw new ArgumentError('Invalid state');
+    card.state = v;
+    view.state = v;
   }
   
   _onRequest(requestInfo) {

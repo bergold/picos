@@ -71,7 +71,7 @@ class Pico {
     
     if (server == null) return;
     server.dispose().then(_onStoppedCtrl.add);
-    server == null;
+    server = null;
   }
   
   set state(int v) {

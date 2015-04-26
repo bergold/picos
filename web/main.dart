@@ -5,6 +5,7 @@ import 'package:picos/ui/pico.dart';
 import 'package:picos/ui/list.dart';
 import 'package:picos/ui/card.dart';
 import 'package:picos/ui/view.dart';
+import 'package:picos/ui/snackbar.dart';
 
 var picoManager;
 
@@ -16,6 +17,7 @@ var viewContainer;
 var tplPicoItemCard;
 var tplNewPicoItemCard;
 var tplRequestInfoCard;
+var tplSnackbar;
 
 // View templates
 var viewWelcome;
@@ -23,6 +25,7 @@ var viewNewPico;
 var viewPico;
 
 // Controllers
+var snackbarStack;
 var picoListCtrl;
 var viewContainerCtrl;
 
@@ -36,10 +39,13 @@ void main() {
   tplPicoItemCard = html.querySelector('#tplPicoItemCard');
   tplNewPicoItemCard = html.querySelector('#tplNewPicoItemCard');
   tplRequestInfoCard = html.querySelector('#tplRequestInfoCard');
+  tplSnackbar = html.querySelector('#tplSnackbar');
   
   viewWelcome = html.querySelector('#viewWelcome');
   viewNewPico = html.querySelector('#viewNewPico');
   viewPico = html.querySelector('#viewPico');
+  
+  snackbarStack = new SnackbarStack();
   
   picoListCtrl = new ListComponent(picoList);
   viewContainerCtrl = new ListComponent(viewContainer);
@@ -107,7 +113,10 @@ initPicoUI(pico) {
   pico.config.path.then((p) => pico.card.path = p);
   
   pico.onStarted.listen((info) {
-    print('Server running on ${info.localAddress}:${info.localPort}');
+    var snackbar = new Snackbar(tplSnackbar, 'Server running on ${info.localAddress}:${info.localPort}');
+    snackbarStack.show(snackbar).then((_) {
+      print('snackbar resolved');
+    });
   });
   
   pico.onStopped.listen((_) {

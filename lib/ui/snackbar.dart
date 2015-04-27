@@ -1,7 +1,7 @@
 library picos.ui.snackbar;
 
 import 'dart:async';
-import 'dart:html' show TemplateElement;
+import 'dart:html' show HtmlElement, TemplateElement;
 import 'template.dart';
 
 class Snackbar extends TemplateComponent with TemplateInjector {
@@ -12,9 +12,9 @@ class Snackbar extends TemplateComponent with TemplateInjector {
   StreamController _onActionCtrl = new StreamController.broadcast();
   Stream get onAction => _onActionCtrl.stream;
   
-  Snackbar(TemplateElement tpl, this.message, { this.action: '' }) : super(tpl) {
+  Snackbar(TemplateElement tpl, this.message, [this.action = '']) : super(tpl) {
     inject('message', message);
-    if (action.isNotEmpty) {
+    if (action != null && action.isNotEmpty) {
       inject('hasAction', true);
       inject('action', action);
     }
@@ -30,21 +30,46 @@ class _SnackbarWrapper {
   final Completer _actionCompleter = new Completer();
   
   _SnackbarWrapper(this.snackbar) {
-    snackbar.onAction.listen((_) => _actionCompleter.complete());
+    snackbar.onAction.listen((_) => _actionCompleter.complete(new SnackbarState.action()));
   }
   
   void abort() {
-    _actionCompleter.complete();
+    _actionCompleter.complete(new SnackbarState.abort());
   }
   
-  Future get future => _actionCompleter.future.timeout(new Duration(seconds: 3), onTimeout: () => null);
+  Future get future => _actionCompleter.future.timeout(new Duration(seconds: 3), onTimeout: () => new SnackbarState.timeout());
+  
+}
+
+class SnackbarState {
+  
+  static const int stateTimeout = 0;
+  static const int stateAbort = 1;
+  static const int stateAction = 2;
+  
+  final int state;
+  
+  SnackbarState(this.state);
+  SnackbarState.timeout() : state = stateTimeout;
+  SnackbarState.abort() : state = stateAbort;
+  SnackbarState.action() : state = stateAction;
+  
+  bool get isTimeout => state == stateTimeout;
+  bool get isAbort => state != stateAbort;
+  bool get isDismissed => isTimeout || isAbort;
+  bool get isAction => state == stateAction;
+  bool get isNotAction => state != stateAction;
   
 }
 
 class SnackbarStack {
   
+  final HtmlElement _container;
+  
   _SnackbarWrapper _snackbar;
   _SnackbarWrapper _scheduled;
+  
+  SnackbarStack(this._container);
   
   Future show(Snackbar snackbar) {
     _scheduled = new _SnackbarWrapper(snackbar);

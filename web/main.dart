@@ -45,7 +45,7 @@ void main() {
   viewNewPico = html.querySelector('#viewNewPico');
   viewPico = html.querySelector('#viewPico');
   
-  snackbarStack = new SnackbarStack();
+  snackbarStack = new SnackbarStack(html.document.body);
   
   picoListCtrl = new ListComponent(picoList);
   viewContainerCtrl = new ListComponent(viewContainer);
@@ -113,14 +113,13 @@ initPicoUI(pico) {
   pico.config.path.then((p) => pico.card.path = p);
   
   pico.onStarted.listen((info) {
-    var snackbar = new Snackbar(tplSnackbar, 'Server running on ${info.localAddress}:${info.localPort}');
-    snackbarStack.show(snackbar).then((_) {
-      print('snackbar resolved');
+    showSnackbar('Server running on ${info.localAddress}:${info.localPort}').then((state) {
+      if (state.isAction) print('snackbar resolved');
     });
   });
   
   pico.onStopped.listen((_) {
-    print('Server disposed.');
+    showSnackbar('Server stopped');
   });
   
   pico.card.onClickOpen.listen((e) {
@@ -131,8 +130,18 @@ initPicoUI(pico) {
     pico.stop();
     viewContainerCtrl.remove(pico.view);
     picoListCtrl.remove(pico.card);
-    picoManager.remove(pico.config)
-      .then((_) => print('Server removed.'));
+    showSnackbar('Server removed', 'Undo').then((status) {
+      if (status.isDismissed) {
+        picoManager.remove(pico.config);
+      } else {
+        // readd pico
+      }
+    });
   });
   return pico;
+}
+
+showSnackbar(message, [action]) {
+  var snackbar = new Snackbar(tplSnackbar, message, action);
+  return snackbarStack.show(snackbar);
 }

@@ -51,25 +51,25 @@
             </div>
           </div>
           <div class="button-group">
-            <div class="icon-button pico-btn-start" title="Start Pico" data-inject="stateNotRunningHidden" data-inject-type="hidden" hidden>
+            <div class="icon-button pico-btn-start" title="Start Pico" data-inject="stateNotRunning" data-inject-type="hidden" hidden>
               <span class="icon icon-play-arrow"></span>
             </div>
-            <div class="icon-button pico-btn-stop" title="Stop Pico" data-inject="stateRunningHidden" data-inject-type="hidden" hidden>
+            <div class="icon-button pico-btn-stop" title="Stop Pico" data-inject="stateRunning" data-inject-type="!hidden" hidden>
               <span class="icon icon-stop"></span>
             </div>
-            <div class="icon-button pico-btn-open" title="Open in browser" data-inject="stateRunningHidden" data-inject-type="hidden" hidden>
+            <div class="icon-button pico-btn-open" title="Open in browser" data-inject="stateRunning" data-inject-type="!hidden" hidden>
               <span class="icon icon-open-in-browser"></span>
             </div>
-            <div class="icon-button pico-btn-clear" title="Clear requests" data-inject="stateRunningHidden" data-inject-type="hidden" hidden>
+            <div class="icon-button pico-btn-clear" title="Clear requests" data-inject="stateRunning" data-inject-type="!hidden" hidden>
               <span class="icon icon-clear-all"></span>
             </div>
-            <div class="icon-button pico-btn-edit" title="Edit Pico" data-inject="stateNotRunningHidden" data-inject-type="hidden" hidden>
+            <div class="icon-button pico-btn-edit" title="Edit Pico" data-inject="stateNotRunning" data-inject-type="!hidden" hidden>
               <span class="icon icon-edit"></span>
             </div>
-            <div class="icon-button pico-btn-delete" title="Delete Pico" data-inject="stateNotRunningHidden" data-inject-type="hidden" hidden>
+            <div class="icon-button pico-btn-delete" title="Delete Pico" data-inject="stateNotRunning" data-inject-type="!hidden" hidden>
               <span class="icon icon-delete"></span>
             </div>
-            <div class="icon-button" data-inject="stateSwitchingHidden" data-inject-type="hidden" hidden></div>
+            <div class="icon-button" data-inject="stateSwitching" data-inject-type="!hidden" hidden></div>
           </div>
         </div>
       </div>
@@ -111,7 +111,7 @@
     <template id="tplSnackbar">
       <div class="snackbar">
         <div class="message" data-inject="message"></div>
-        <div class="action" data-inject="hasAction" data-inject-type="hidden" hidden>
+        <div class="action" data-inject="hasAction" data-inject-type="!hidden" hidden>
           <span data-inject="action"></span>
         </div>
       </div>
@@ -128,10 +128,10 @@
     
     <template id="viewPico">
       <section hidden>
-        <div class="card" data-inject="stateNotRunningHidden" data-inject-type="hidden" hidden>
+        <div class="card" data-inject="stateNotRunning" data-inject-type="!hidden" hidden>
           Server is not running.
         </div>
-        <div class="pico-request-list" data-inject="stateRunningHidden" data-inject-type="hidden" hidden>
+        <div class="pico-request-list" data-inject="stateRunning" data-inject-type="!hidden" hidden>
           <div class="list-item list-placeholder">Requests will be displayed here.</div>
         </div>
       </section>

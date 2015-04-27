@@ -17,23 +17,23 @@ class PicoCard extends ListItemCard with TemplateInjector {
   set state(int v) {
     switch (v) {
       case Pico.stateNotRunning:
-        inject('stateNotRunningHidden', false);
-        inject('stateSwitchingHidden', true);
-        inject('stateRunningHidden', true);
+        inject('stateNotRunning', true);
+        inject('stateSwitching', false);
+        inject('stateRunning', false);
         
         inject('stateIcon', 'icon-pico-stopped');
         break;
         
       case Pico.stateSwitching:
-        inject('stateSwitchingHidden', false);
-        inject('stateNotRunningHidden', true);
-        inject('stateRunningHidden', true);
+        inject('stateSwitching', true);
+        inject('stateNotRunning', false);
+        inject('stateRunning', false);
         break;
         
       case Pico.stateRunning:
-        inject('stateRunningHidden', false);
-        inject('stateNotRunningHidden', true);
-        inject('stateSwitchingHidden', true);
+        inject('stateRunning', true);
+        inject('stateNotRunning', false);
+        inject('stateSwitching', false);
         
         inject('stateIcon', 'icon-pico-running');
         break;
@@ -84,21 +84,21 @@ class PicoView extends View with TemplateInjector {
   set state(int v) {
     switch (v) {
       case Pico.stateNotRunning:
-        inject('stateNotRunningHidden', false);
-        inject('stateSwitchingHidden', true);
-        inject('stateRunningHidden', true);
+        inject('stateNotRunning', true);
+        inject('stateSwitching', false);
+        inject('stateRunning', false);
         break;
         
       case Pico.stateSwitching:
-        inject('stateSwitchingHidden', false);
-        inject('stateNotRunningHidden', true);
-        inject('stateRunningHidden', true);
+        inject('stateSwitching', true);
+        inject('stateNotRunning', false);
+        inject('stateRunning', false);
         break;
         
       case Pico.stateRunning:
-        inject('stateRunningHidden', false);
-        inject('stateNotRunningHidden', true);
-        inject('stateSwitchingHidden', true);
+        inject('stateRunning', true);
+        inject('stateNotRunning', false);
+        inject('stateSwitching', false);
         break;
     }
   }

@@ -45,10 +45,12 @@ abstract class TemplateInjector {
   }
   
   _injectAttribute(element, attribute, value) {
-    if (value == null || (value is bool && value == false)) {
+    var neg = attribute.startsWith('!');
+    var attributeName = neg ? attribute.substring(1) : attribute;
+    if (value == null || (value is bool && value == neg)) {
       element.attributes.remove(attribute);
     } else {
-      var textValue = (value is bool && value == true) ? '' : value.toString();
+      var textValue = (value is bool && value == !neg) ? '' : value.toString();
       element.attributes[attribute] = textValue;
     }
   }

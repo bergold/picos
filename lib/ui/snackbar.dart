@@ -96,18 +96,20 @@ class SnackbarStack {
   
   Future _remove() {
     if (_snackbar == null) return new Future.value();
-    return _animateOut().then((_) {
-      print('remove ${_snackbar.snackbar.message}');
+    var element = _snackbar.snackbar.template;
+    return _animateOut(element).then((_) {
+      element.remove();
     });
   }
   
   Future _append() {
     if (_snackbar == null) return new Future.value();
-    print('append ${_snackbar.snackbar.message}');
-    return _animateIn();
+    var element = _snackbar.snackbar.template;
+    _container.append(element);
+    return _animateIn(element);
   }
   
-  Future _animateIn() => new Future.value();
-  Future _animateOut() => new Future.value();
+  Future _animateIn(element) => new Future.value();
+  Future _animateOut(element) => new Future.value();
   
 }

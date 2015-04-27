@@ -48,10 +48,10 @@ abstract class TemplateInjector {
     var neg = attribute.startsWith('!');
     var attributeName = neg ? attribute.substring(1) : attribute;
     if (value == null || (value is bool && value == neg)) {
-      element.attributes.remove(attribute);
+      element.attributes.remove(attributeName);
     } else {
       var textValue = (value is bool && value == !neg) ? '' : value.toString();
-      element.attributes[attribute] = textValue;
+      element.attributes[attributeName] = textValue;
     }
   }
   

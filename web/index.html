@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="styles/components/button.css">
     <link rel="stylesheet" type="text/css" href="styles/components/card.css">
     <link rel="stylesheet" type="text/css" href="styles/components/list.css">
+    <link rel="stylesheet" type="text/css" href="styles/components/snackbar.css">
   </head>
 
   <body>
@@ -110,7 +111,7 @@
     <template id="tplSnackbar">
       <div class="snackbar">
         <div class="message" data-inject="message"></div>
-        <div class="action" data-inject="hasAction" data-inject-type="hidden">
+        <div class="action" data-inject="hasAction" data-inject-type="hidden" hidden>
           <span data-inject="action"></span>
         </div>
       </div>

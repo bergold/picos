@@ -94,22 +94,11 @@ class SnackbarStack {
     });
   }
   
-  Future _remove() {
-    if (_snackbar == null) return new Future.value();
-    var element = _snackbar.snackbar.template;
-    return _animateOut(element).then((_) {
-      element.remove();
-    });
-  }
-  
   Future _append() {
     if (_snackbar == null) return new Future.value();
     var element = _snackbar.snackbar.template;
     _container.append(element);
-    return _animateIn(element);
-  }
-  
-  Future _animateIn(element) {
+    
     var promise = new Completer();
     var animation = new JsObject.fromBrowserObject(element).callMethod('animate', [
       new JsObject.jsify([
@@ -127,7 +116,10 @@ class SnackbarStack {
     return promise.future;
   }
   
-  Future _animateOut(element) {
+  Future _remove() {
+    if (_snackbar == null) return new Future.value();
+    var element = _snackbar.snackbar.template;
+    
     var promise = new Completer();
     var animation = new JsObject.fromBrowserObject(element).callMethod('animate', [
       new JsObject.jsify([
@@ -140,6 +132,7 @@ class SnackbarStack {
       })
     ]);
     animation['onfinish'] = (_) {
+      element.remove();
       promise.complete();
     };
     return promise.future;

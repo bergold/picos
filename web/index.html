@@ -23,6 +23,9 @@
       </main>
 
     </div>
+    
+    <div id="snackbarContainer" class="snackbar-container">
+    </div>
 
 
     <!-- Templates -->
@@ -111,7 +114,7 @@
     <template id="tplSnackbar">
       <div class="snackbar">
         <div class="message" data-inject="message"></div>
-        <div class="action" data-inject="hasAction" data-inject-type="!hidden" hidden>
+        <div class="action snackbar-btn-action" data-inject="hasAction" data-inject-type="!hidden" hidden>
           <span data-inject="action"></span>
         </div>
       </div>

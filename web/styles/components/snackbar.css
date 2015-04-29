@@ -1,9 +1,16 @@
+.snackbar-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
 .snackbar {
-  position: absolute;
-  left: 24px;
-  bottom: 24px;
+  margin: 0 auto;
+  min-width: 288px;
+  max-width: 568px;
+  border-radius: 2px;
   padding: 16px;
-  background: #000;
+  background: #323232;
   color: #fff;
 }

@@ -2,6 +2,7 @@ library picos.ui.snackbar;
 
 import 'dart:async';
 import 'dart:html' show HtmlElement, TemplateElement;
+import 'dart:js';
 import 'template.dart';
 
 class Snackbar extends TemplateComponent with TemplateInjector {
@@ -18,7 +19,7 @@ class Snackbar extends TemplateComponent with TemplateInjector {
       inject('hasAction', true);
       inject('action', action);
     }
-    var btnAction = template.querySelector('.pico-btn-action');
+    var btnAction = template.querySelector('.snackbar-btn-action');
     if (btnAction != null) btnAction.onClick.pipe(_onActionCtrl);
   }
   
@@ -109,7 +110,40 @@ class SnackbarStack {
     return _animateIn(element);
   }
   
-  Future _animateIn(element) => new Future.value();
-  Future _animateOut(element) => new Future.value();
+  Future _animateIn(element) {
+    var promise = new Completer();
+    var animation = new JsObject.fromBrowserObject(element).callMethod('animate', [
+      new JsObject.jsify([
+        { 'transform': 'translateY(100%)' },
+        { 'transform': 'translateY(0%)' }
+      ]),
+      new JsObject.jsify({
+        'duration': 500,
+        'easing': 'ease'
+      })
+    ]);
+    animation['onfinish'] = (_) {
+      promise.complete();
+    };
+    return promise.future;
+  }
+  
+  Future _animateOut(element) {
+    var promise = new Completer();
+    var animation = new JsObject.fromBrowserObject(element).callMethod('animate', [
+      new JsObject.jsify([
+        { 'transform': 'translateY(0%)' },
+        { 'transform': 'translateY(100%)' }
+      ]),
+      new JsObject.jsify({
+        'duration': 500,
+        'easing': 'ease'
+      })
+    ]);
+    animation['onfinish'] = (_) {
+      promise.complete();
+    };
+    return promise.future;
+  }
   
 }

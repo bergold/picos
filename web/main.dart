@@ -12,6 +12,7 @@ var picoManager;
 // UI Elements
 var picoList;
 var viewContainer;
+var snackbarContainer;
 
 // Templates
 var tplPicoItemCard;
@@ -35,6 +36,7 @@ void main() {
   
   picoList = html.querySelector('#picoList');
   viewContainer = html.querySelector('#viewContainer');
+  snackbarContainer = html.querySelector('#snackbarContainer');
   
   tplPicoItemCard = html.querySelector('#tplPicoItemCard');
   tplNewPicoItemCard = html.querySelector('#tplNewPicoItemCard');
@@ -45,7 +47,7 @@ void main() {
   viewNewPico = html.querySelector('#viewNewPico');
   viewPico = html.querySelector('#viewPico');
   
-  snackbarStack = new SnackbarStack(html.document.body);
+  snackbarStack = new SnackbarStack(snackbarContainer);
   
   picoListCtrl = new ListComponent(picoList);
   viewContainerCtrl = new ListComponent(viewContainer);

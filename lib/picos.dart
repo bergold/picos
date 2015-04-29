@@ -1,6 +1,7 @@
 library picos;
 
 import 'dart:async';
+import 'dart:html' show window;
 import 'package:chrome/chrome_app.dart' as chrome;
 import 'package:chrome_net/server.dart' show PicoServer;
 import 'storage.dart';
@@ -42,6 +43,7 @@ class Pico {
     card
       ..onClickStart.listen(start)
       ..onClickStop.listen(stop)
+      ..onClickOpen.listen(open)
       ..onClickClear.listen(view.clear);
       
     onStarted.listen((_) {
@@ -72,6 +74,10 @@ class Pico {
     if (server == null) return;
     server.dispose().then(_onStoppedCtrl.add);
     server = null;
+  }
+  
+  open([_]) {
+    window.open('http://127.0.0.1:${config.port}', '_blank');
   }
   
   set state(int v) {

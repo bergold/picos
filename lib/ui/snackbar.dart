@@ -31,7 +31,7 @@ class _SnackbarWrapper {
   final Completer _actionCompleter = new Completer();
   
   _SnackbarWrapper(this.snackbar) {
-    snackbar.onAction.listen((_) => _actionCompleter.complete(new SnackbarState.action()));
+    snackbar.onAction.first.then((_) => _actionCompleter.complete(new SnackbarState.action()));
   }
   
   void abort() {
@@ -56,10 +56,9 @@ class SnackbarState {
   SnackbarState.action() : state = stateAction;
   
   bool get isTimeout => state == stateTimeout;
-  bool get isAbort => state != stateAbort;
-  bool get isDismissed => isTimeout || isAbort;
+  bool get isAbort => state == stateAbort;
   bool get isAction => state == stateAction;
-  bool get isNotAction => state != stateAction;
+  bool get isDismissed => isTimeout || isAbort;
   
 }
 

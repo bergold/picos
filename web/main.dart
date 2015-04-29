@@ -115,17 +115,13 @@ initPicoUI(pico) {
   pico.config.path.then((p) => pico.card.path = p);
   
   pico.onStarted.listen((info) {
-    showSnackbar('Server running on ${info.localAddress}:${info.localPort}').then((state) {
-      if (state.isAction) print('snackbar resolved');
+    showSnackbar('Server running on ${info.localAddress}:${info.localPort}', 'Open').then((state) {
+      if (state.isAction) pico.open();
     });
   });
   
   pico.onStopped.listen((_) {
     showSnackbar('Server stopped');
-  });
-  
-  pico.card.onClickOpen.listen((e) {
-    html.window.open('http://127.0.0.1:${pico.config.port}', '_blank');
   });
   
   pico.card.onClickDelete.listen((e) {
@@ -136,7 +132,8 @@ initPicoUI(pico) {
       if (status.isDismissed) {
         picoManager.remove(pico.config);
       } else {
-        // readd pico
+        viewContainerCtrl.add(pico.view);
+        picoListCtrl.add(pico.card);
       }
     });
   });

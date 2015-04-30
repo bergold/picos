@@ -110,10 +110,6 @@ createPicoFromConfig(config) {
 }
 
 initPicoUI(pico) {
-  pico.card.name = pico.config.name;
-  pico.card.port = pico.config.port;
-  pico.config.path.then((p) => pico.card.path = p);
-  
   pico.onStarted.listen((info) {
     showSnackbar('Server running on ${info.localAddress}:${info.localPort}', 'Open').then((state) {
       if (state.isAction) pico.open();
@@ -134,6 +130,7 @@ initPicoUI(pico) {
       } else {
         viewContainerCtrl.add(pico.view);
         picoListCtrl.add(pico.card);
+        pico.initUI(events: false);
       }
     });
   });

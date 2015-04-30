@@ -39,21 +39,27 @@ class Pico {
     initUI();
   }
   
-  void initUI() {
-    card
-      ..onClickStart.listen(start)
-      ..onClickStop.listen(stop)
-      ..onClickOpen.listen(open)
-      ..onClickClear.listen(view.clear);
-      
-    onStarted.listen((_) {
-      state = stateRunning;
-    });
-    onStopped.listen((_) {
-      state = stateNotRunning;
-    });
-      
+  void initUI({ events: true }) {
+    card.name = config.name;
+    card.port = config.port;
+    config.path.then((p) => card.path = p);
+    
     state = stateNotRunning;
+    
+    if (events) {
+      card
+        ..onClickStart.listen(start)
+        ..onClickStop.listen(stop)
+        ..onClickOpen.listen(open)
+        ..onClickClear.listen(view.clear);
+        
+      onStarted.listen((_) {
+        state = stateRunning;
+      });
+      onStopped.listen((_) {
+        state = stateNotRunning;
+      });
+    }
   }
   
   start([_]) {

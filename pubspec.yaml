@@ -1,4 +1,5 @@
 name: picos
+version: 0.2.0-alpha.0
 description: Serve a local folder on localhost.
 dependencies:
   chrome: any

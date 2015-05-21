@@ -6,6 +6,7 @@ import 'package:picos/ui/list.dart';
 import 'package:picos/ui/card.dart';
 import 'package:picos/ui/view.dart';
 import 'package:picos/ui/snackbar.dart';
+import 'package:picos/ui/dialog.dart';
 
 var picoManager;
 
@@ -19,6 +20,7 @@ var tplPicoItemCard;
 var tplNewPicoItemCard;
 var tplRequestInfoCard;
 var tplSnackbar;
+var tplEditDialog;
 
 // View templates
 var viewWelcome;
@@ -42,6 +44,7 @@ void main() {
   tplNewPicoItemCard = html.querySelector('#tplNewPicoItemCard');
   tplRequestInfoCard = html.querySelector('#tplRequestInfoCard');
   tplSnackbar = html.querySelector('#tplSnackbar');
+  tplEditDialog = html.querySelector('#tplEditDialog');
   
   viewWelcome = html.querySelector('#viewWelcome');
   viewNewPico = html.querySelector('#viewNewPico');
@@ -120,6 +123,10 @@ initPicoUI(pico) {
     showSnackbar('Server stopped');
   });
   
+  pico.card.onClickEdit.listen((e) {
+    showEditDialog(pico);
+  });
+  
   pico.card.onClickDelete.listen((e) {
     pico.stop();
     viewContainerCtrl.remove(pico.view);
@@ -135,6 +142,12 @@ initPicoUI(pico) {
     });
   });
   return pico;
+}
+
+showEditDialog(pico) {
+  var editDialog = new EditDialog(tplEditDialog, html.document.body);
+  
+  return editDialog.show();
 }
 
 showSnackbar(message, [action]) {

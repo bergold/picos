@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="styles/components/card.css">
     <link rel="stylesheet" type="text/css" href="styles/components/list.css">
     <link rel="stylesheet" type="text/css" href="styles/components/snackbar.css">
+    <link rel="stylesheet" type="text/css" href="styles/components/dialog.css">
   </head>
 
   <body>
@@ -111,6 +112,21 @@
           <div class="icon icon-unfold-less show-selected"></div> -->
         </div>
         <div class="show-selected">Expanded</div>
+      </div>
+    </template>
+    
+    <template id="tplEditDialog">
+      <div class="dialog-backdrop">
+        <div class="dialog">
+          <div class="content">
+            <div class="title">Edit Pico</div>
+            <div class="body"></div>
+          </div>
+          <div class="actions">
+            <div class="dialog-btn-close action">Cancel</div>
+            <div class="dialog-btn-save action">Ok</div>
+          </div>
+        </div>
       </div>
     </template>
     
